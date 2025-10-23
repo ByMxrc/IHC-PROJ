@@ -1,0 +1,38 @@
+/**
+ * Estilos Página de Transporte
+ */
+
+.transport-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.info-card h2 {
+  color: #2e7d32;
+  margin: 0 0 1rem 0;
+}
+
+.info-card p {
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+}
+
+.info-card ul {
+  color: #666;
+  line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+  .transport-page {
+    padding: 1rem;
+  }
+}

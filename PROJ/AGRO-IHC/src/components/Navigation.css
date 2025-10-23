@@ -1,0 +1,200 @@
+/**
+ * Estilos de Navegación
+ * ETAPA 3: DESARROLLO PROTOTIPO - Diseño menú con parámetros de usabilidad
+ * 
+ * Parámetros de usabilidad:
+ * - Contraste adecuado (WCAG AA)
+ * - Feedback visual inmediato
+ * - Espaciado adecuado para touch targets (44px mínimo)
+ * - Transiciones suaves
+ * - Responsive design mobile-first
+ */
+
+.navigation {
+  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.nav-logo {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-icon {
+  font-size: 2rem;
+}
+
+/* Botón menú móvil */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  flex-direction: column;
+  gap: 4px;
+  width: 44px; /* REQUISITO: Touch target mínimo 44px */
+  height: 44px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.mobile-menu-toggle:hover,
+.mobile-menu-toggle:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu-toggle:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.hamburger-line {
+  width: 24px;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
+}
+
+/* Menú principal */
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.nav-item {
+  flex: 1;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  min-height: 44px; /* REQUISITO: Touch target mínimo */
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nav-link:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.nav-link.active {
+  background: white;
+  color: #2e7d32;
+  border-color: white;
+  font-weight: 600;
+}
+
+.nav-icon {
+  font-size: 1.5rem;
+}
+
+.nav-label {
+  font-size: 0.875rem;
+}
+
+/* Responsive - Tablets y móviles */
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .nav-menu.mobile-open {
+    display: flex;
+  }
+
+  .nav-item {
+    flex: none;
+    width: 100%;
+  }
+
+  .nav-link {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .nav-icon {
+    font-size: 1.25rem;
+  }
+
+  .nav-label {
+    font-size: 1rem;
+  }
+}
+
+/* Responsive - Móviles pequeños */
+@media (max-width: 480px) {
+  .nav-logo {
+    font-size: 1.25rem;
+  }
+
+  .logo-icon {
+    font-size: 1.5rem;
+  }
+}

@@ -1,0 +1,39 @@
+/**
+ * Estilos de Página de Inscripciones
+ */
+
+.registrations-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.empty-state {
+  background: white;
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.empty-icon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-state h2 {
+  color: #666;
+  margin: 0 0 0.5rem 0;
+}
+
+.empty-state p {
+  color: #999;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .registrations-page {
+    padding: 1rem;
+  }
+}
