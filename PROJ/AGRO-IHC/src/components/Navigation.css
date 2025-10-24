@@ -150,6 +150,89 @@
   font-size: 0.875rem;
 }
 
+/* Divisor */
+.nav-divider {
+  width: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 0 0.5rem;
+  flex: none;
+}
+
+/* Usuario y logout */
+.nav-user-item {
+  flex: none;
+}
+
+.nav-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: white;
+  min-height: 44px;
+}
+
+.nav-user-icon {
+  font-size: 1.5rem;
+}
+
+.nav-user-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.nav-logout {
+  background: rgba(244, 67, 54, 0.2) !important;
+  border-color: rgba(244, 67, 54, 0.3) !important;
+}
+
+.nav-logout:hover {
+  background: rgba(244, 67, 54, 0.4) !important;
+  border-color: rgba(244, 67, 54, 0.5) !important;
+}
+
+.nav-logout.active {
+  background: #f44336 !important;
+  color: white !important;
+  border-color: #f44336 !important;
+}
+
+.nav-login {
+  background: rgba(33, 150, 243, 0.2) !important;
+  border-color: rgba(33, 150, 243, 0.3) !important;
+}
+
+.nav-login:hover {
+  background: rgba(33, 150, 243, 0.4) !important;
+  border-color: rgba(33, 150, 243, 0.5) !important;
+}
+
+.nav-login.active {
+  background: #2196f3 !important;
+  color: white !important;
+  border-color: #2196f3 !important;
+}
+
+.nav-admin {
+  background: rgba(156, 39, 176, 0.2) !important;
+  border-color: rgba(156, 39, 176, 0.3) !important;
+}
+
+.nav-admin:hover {
+  background: rgba(156, 39, 176, 0.4) !important;
+  border-color: rgba(156, 39, 176, 0.5) !important;
+}
+
+.nav-admin.active {
+  background: #9c27b0 !important;
+  color: white !important;
+  border-color: #9c27b0 !important;
+}
+
 /* Responsive - Tablets y móviles */
 @media (max-width: 768px) {
   .mobile-menu-toggle {
@@ -184,6 +267,26 @@
   }
 
   .nav-label {
+    font-size: 1rem;
+  }
+
+  .nav-divider {
+    height: 2px;
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .nav-user-info {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .nav-user-icon {
+    font-size: 1.25rem;
+  }
+
+  .nav-user-name {
     font-size: 1rem;
   }
 }

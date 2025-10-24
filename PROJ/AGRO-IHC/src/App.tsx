@@ -13,6 +13,8 @@
 
 import { useState } from 'react';
 import type { MenuOption } from './types';
+import { AuthProvider } from './context/AuthContext';
+import { HomeContentProvider } from './context/HomeContentContext';
 import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
 import ProducersPage from './pages/ProducersPage';
@@ -21,9 +23,10 @@ import RegistrationsPage from './pages/RegistrationsPage';
 import TransportPage from './pages/TransportPage';
 import SalesPage from './pages/SalesPage';
 import ReportsPage from './pages/ReportsPage';
+import HomeEditor from './components/HomeEditor';
 import './App.css';
 
-function App() {
+function AppContent() {
   const [currentPage, setCurrentPage] = useState<MenuOption>('home');
 
   const renderPage = () => {
@@ -42,6 +45,8 @@ function App() {
         return <SalesPage />;
       case 'reports':
         return <ReportsPage />;
+      case 'edit-home':
+        return <HomeEditor />;
       default:
         return <HomePage />;
     }
@@ -62,6 +67,16 @@ function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <HomeContentProvider>
+        <AppContent />
+      </HomeContentProvider>
+    </AuthProvider>
   );
 }
 
