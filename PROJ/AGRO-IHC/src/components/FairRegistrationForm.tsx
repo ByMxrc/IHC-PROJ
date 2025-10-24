@@ -6,7 +6,7 @@
 import { useState } from 'react';
 import type { FormEvent, ChangeEvent } from 'react';
 import type { Registration } from '../types';
-import { validateRequired, validatePositiveNumber } from '../utils/validation';
+import { validateRequired, validatePositiveNumber, validateMinLength } from '../utils/validation';
 import './FairRegistrationForm.css';
 
 interface FairRegistrationFormProps {
@@ -80,6 +80,8 @@ export default function FairRegistrationForm({
       case 'productsToSell':
         if (!validateRequired(formData.productsToSell)) {
           error = 'Ingrese los productos a vender';
+        } else if (!validateMinLength(formData.productsToSell, 3)) {
+          error = 'Ingrese al menos un producto válido (mínimo 3 caracteres)';
         }
         break;
       case 'estimatedQuantity':

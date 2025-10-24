@@ -12,17 +12,17 @@ export default function FairsPage() {
   const [fairs, setFairs] = useState<Fair[]>([
     {
       id: '1',
-      name: 'Feria Agroproductiva de Primavera',
-      description: 'Gran feria de productos agrícolas de temporada',
-      location: 'San Juan de Lurigancho, Lima',
-      address: 'Parque Zonal Huiracocha',
+      name: 'Feria Agroproductiva de Primavera 2025',
+      description: 'Gran feria de productos agrícolas de temporada en la ciudad de Cuenca',
+      location: 'Parque Central de Cuenca',
+      address: 'Calle Gran Colombia y Benigno Malo',
       startDate: new Date('2025-11-01'),
       endDate: new Date('2025-11-03'),
       maxCapacity: 50,
       currentCapacity: 12,
       status: 'scheduled',
       productCategories: ['Frutas', 'Verduras', 'Hortalizas'],
-      requirements: ['Certificado sanitario', 'RUC', 'Licencia de funcionamiento'],
+      requirements: ['Certificado sanitario', 'RUC o RISE', 'Permiso municipal'],
     },
   ]);
 

@@ -18,6 +18,7 @@
 import { useState } from 'react';
 import type { FormEvent, ChangeEvent } from 'react';
 import type { Producer } from '../types';
+import { PROVINCIAS_ECUADOR, CANTONES_POR_PROVINCIA } from '../types';
 import {
   validateEmail,
   validatePhone,
@@ -25,6 +26,9 @@ import {
   validateRUC,
   validateRequired,
   validatePositiveNumber,
+  validateMinLength,
+  validateOnlyLetters,
+  validateNoSpecialSymbols,
 } from '../utils/validation';
 import './ProducerForm.css';
 
@@ -68,30 +72,21 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
     'Artesanías',
   ];
 
-  // Departamentos del Perú
-  const departments = [
-    'Lima',
-    'Cusco',
-    'Arequipa',
-    'La Libertad',
-    'Piura',
-    'Junín',
-    'Cajamarca',
-    'Puno',
-    'Lambayeque',
-    'Ica',
-    'Áncash',
-    'Huánuco',
-    'Ayacucho',
-    'San Martín',
-    'Loreto',
-    'Ucayali',
-  ];
+  // Cantones filtrados según la provincia seleccionada
+  const availableDistricts = formData.province 
+    ? CANTONES_POR_PROVINCIA[formData.province] || []
+    : [];
 
   // Manejo de cambios en campos de texto
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    
+    // Si cambia la provincia, resetear el distrito
+    if (name === 'province') {
+      setFormData((prev) => ({ ...prev, [name]: value, district: '' }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
     
     // Limpiar error al editar
     if (errors[name]) {
@@ -135,11 +130,19 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
       case 'name':
         if (!validateRequired(formData.name)) {
           error = 'El nombre es requerido';
+        } else if (!validateMinLength(formData.name, 2)) {
+          error = 'El nombre debe tener al menos 2 caracteres';
+        } else if (!validateOnlyLetters(formData.name)) {
+          error = 'El nombre solo puede contener letras';
         }
         break;
       case 'lastName':
         if (!validateRequired(formData.lastName)) {
           error = 'El apellido es requerido';
+        } else if (!validateMinLength(formData.lastName, 2)) {
+          error = 'El apellido debe tener al menos 2 caracteres';
+        } else if (!validateOnlyLetters(formData.lastName)) {
+          error = 'El apellido solo puede contener letras';
         }
         break;
       case 'documentNumber':
@@ -168,11 +171,15 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
       case 'address':
         if (!validateRequired(formData.address)) {
           error = 'La dirección es requerida';
+        } else if (!validateMinLength(formData.address, 5)) {
+          error = 'La dirección debe tener al menos 5 caracteres';
+        } else if (!validateNoSpecialSymbols(formData.address)) {
+          error = 'La dirección contiene caracteres no permitidos';
         }
         break;
       case 'district':
         if (!validateRequired(formData.district)) {
-          error = 'El distrito es requerido';
+          error = 'El cantón es requerido';
         }
         break;
       case 'province':
@@ -182,7 +189,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
         break;
       case 'department':
         if (!validateRequired(formData.department)) {
-          error = 'El departamento es requerido';
+          error = 'El país es requerido';
         }
         break;
       case 'productType':
@@ -452,7 +459,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="department" className="form-label">
-              Departamento <span className="required">*</span>
+              País <span className="required">*</span>
             </label>
             <select
               id="department"
@@ -466,11 +473,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
               aria-describedby={errors.department ? 'department-error' : undefined}
             >
               <option value="">Seleccione...</option>
-              {departments.map((dept) => (
-                <option key={dept} value={dept}>
-                  {dept}
-                </option>
-              ))}
+              <option value="Ecuador">Ecuador</option>
             </select>
             {touched.department && errors.department && (
               <span id="department-error" className="error-message" role="alert">
@@ -483,8 +486,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
             <label htmlFor="province" className="form-label">
               Provincia <span className="required">*</span>
             </label>
-            <input
-              type="text"
+            <select
               id="province"
               name="province"
               className={`form-input ${touched.province && errors.province ? 'error' : ''}`}
@@ -494,7 +496,14 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
               aria-required="true"
               aria-invalid={touched.province && !!errors.province}
               aria-describedby={errors.province ? 'province-error' : undefined}
-            />
+            >
+              <option value="">Seleccione...</option>
+              {PROVINCIAS_ECUADOR.map((prov) => (
+                <option key={prov} value={prov}>
+                  {prov}
+                </option>
+              ))}
+            </select>
             {touched.province && errors.province && (
               <span id="province-error" className="error-message" role="alert">
                 {errors.province}
@@ -504,20 +513,29 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
 
           <div className="form-group">
             <label htmlFor="district" className="form-label">
-              Distrito <span className="required">*</span>
+              Cantón <span className="required">*</span>
             </label>
-            <input
-              type="text"
+            <select
               id="district"
               name="district"
               className={`form-input ${touched.district && errors.district ? 'error' : ''}`}
               value={formData.district}
               onChange={handleInputChange}
               onBlur={() => handleBlur('district')}
+              disabled={!formData.province}
               aria-required="true"
               aria-invalid={touched.district && !!errors.district}
               aria-describedby={errors.district ? 'district-error' : undefined}
-            />
+            >
+              <option value="">
+                {formData.province ? 'Seleccione un cantón...' : 'Primero seleccione provincia'}
+              </option>
+              {availableDistricts.map((dist) => (
+                <option key={dist} value={dist}>
+                  {dist}
+                </option>
+              ))}
+            </select>
             {touched.district && errors.district && (
               <span id="district-error" className="error-message" role="alert">
                 {errors.district}

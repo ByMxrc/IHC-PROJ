@@ -32,6 +32,34 @@ export const validateRequired = (value: string): boolean => {
   return value.trim().length > 0;
 };
 
+// Validación de longitud mínima
+export const validateMinLength = (value: string, minLength: number): boolean => {
+  return value.trim().length >= minLength;
+};
+
+// Validación de longitud máxima
+export const validateMaxLength = (value: string, maxLength: number): boolean => {
+  return value.trim().length <= maxLength;
+};
+
+// Validación de solo letras y espacios (nombres, apellidos)
+export const validateOnlyLetters = (value: string): boolean => {
+  const regex = /^[a-záéíóúñA-ZÁÉÍÓÚÑ\s]+$/;
+  return regex.test(value);
+};
+
+// Validación de texto sin símbolos especiales (direcciones)
+export const validateNoSpecialSymbols = (value: string): boolean => {
+  const regex = /^[a-zA-Z0-9áéíóúñÁÉÍÓÚÑ\s.,#-]+$/;
+  return regex.test(value);
+};
+
+// Validación de solo letras y números (sin símbolos)
+export const validateAlphanumeric = (value: string): boolean => {
+  const regex = /^[a-zA-Z0-9áéíóúñÁÉÍÓÚÑ\s]+$/;
+  return regex.test(value);
+};
+
 // Validación de número positivo
 export const validatePositiveNumber = (value: number): boolean => {
   return !isNaN(value) && value > 0;

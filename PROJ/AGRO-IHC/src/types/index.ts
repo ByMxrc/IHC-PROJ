@@ -96,3 +96,59 @@ export type MenuOption =
   | 'transport' 
   | 'sales' 
   | 'reports';
+
+// CONTEXTO: Provincias del Ecuador
+export const PROVINCIAS_ECUADOR = [
+  'Azuay',
+  'Bolívar',
+  'Cañar',
+  'Carchi',
+  'Chimborazo',
+  'Cotopaxi',
+  'El Oro',
+  'Esmeraldas',
+  'Galápagos',
+  'Guayas',
+  'Imbabura',
+  'Loja',
+  'Los Ríos',
+  'Manabí',
+  'Morona Santiago',
+  'Napo',
+  'Orellana',
+  'Pastaza',
+  'Pichincha',
+  'Santa Elena',
+  'Santo Domingo de los Tsáchilas',
+  'Sucumbíos',
+  'Tungurahua',
+  'Zamora Chinchipe',
+] as const;
+
+// CONTEXTO: Cantones principales por provincia (selección representativa)
+export const CANTONES_POR_PROVINCIA: Record<string, string[]> = {
+  'Azuay': ['Cuenca', 'Gualaceo', 'Paute', 'Santa Isabel', 'Girón', 'Sígsig', 'Chordeleg'],
+  'Bolívar': ['Guaranda', 'Chimbo', 'San Miguel', 'Chillanes', 'Echeandía'],
+  'Cañar': ['Azogues', 'Cañar', 'La Troncal', 'Biblián', 'El Tambo'],
+  'Carchi': ['Tulcán', 'Montúfar', 'Espejo', 'Mira', 'Bolívar', 'San Pedro de Huaca'],
+  'Chimborazo': ['Riobamba', 'Alausí', 'Guano', 'Chambo', 'Colta', 'Chunchi'],
+  'Cotopaxi': ['Latacunga', 'Pujilí', 'Salcedo', 'Saquisilí', 'La Maná', 'Sigchos'],
+  'El Oro': ['Machala', 'Pasaje', 'Santa Rosa', 'Huaquillas', 'El Guabo', 'Zaruma'],
+  'Esmeraldas': ['Esmeraldas', 'Atacames', 'Muisne', 'Quinindé', 'San Lorenzo', 'Eloy Alfaro'],
+  'Galápagos': ['San Cristóbal', 'Santa Cruz', 'Isabela'],
+  'Guayas': ['Guayaquil', 'Durán', 'Milagro', 'Daule', 'Samborondón', 'Naranjal', 'Pedro Carbo'],
+  'Imbabura': ['Ibarra', 'Otavalo', 'Cotacachi', 'Atuntaqui', 'Pimampiro', 'Urcuquí'],
+  'Loja': ['Loja', 'Catamayo', 'Macará', 'Cariamanga', 'Catacocha', 'Zapotillo'],
+  'Los Ríos': ['Babahoyo', 'Quevedo', 'Ventanas', 'Vinces', 'Valencia', 'Buena Fe'],
+  'Manabí': ['Portoviejo', 'Manta', 'Montecristi', 'Jipijapa', 'Chone', 'Bahía de Caráquez', 'El Carmen'],
+  'Morona Santiago': ['Macas', 'Gualaquiza', 'Sucúa', 'Méndez', 'Santiago', 'Palora'],
+  'Napo': ['Tena', 'Archidona', 'El Chaco', 'Quijos', 'Carlos Julio Arosemena Tola'],
+  'Orellana': ['Francisco de Orellana', 'La Joya de los Sachas', 'Loreto', 'Aguarico'],
+  'Pastaza': ['Puyo', 'Mera', 'Santa Clara', 'Arajuno'],
+  'Pichincha': ['Quito', 'Cayambe', 'Mejía', 'Pedro Moncayo', 'Rumiñahui', 'San Miguel de los Bancos'],
+  'Santa Elena': ['Santa Elena', 'La Libertad', 'Salinas'],
+  'Santo Domingo de los Tsáchilas': ['Santo Domingo'],
+  'Sucumbíos': ['Nueva Loja', 'Shushufindi', 'Cascales', 'Cuyabeno', 'Gonzalo Pizarro', 'Putumayo', 'Sucumbíos'],
+  'Tungurahua': ['Ambato', 'Baños de Agua Santa', 'Pelileo', 'Píllaro', 'Patate', 'Cevallos'],
+  'Zamora Chinchipe': ['Zamora', 'Yantzaza', 'Chinchipe', 'El Pangui', 'Nangaritza'],
+};
