@@ -2,18 +2,21 @@
  * Página de Ventas
  */
 
+import { useTranslation } from 'react-i18next';
 import './SalesPage.css';
 
 export default function SalesPage() {
+  const { t } = useTranslation();
+  
   return (
     <div className="sales-page">
       <div className="page-header">
         <div>
           <h1 className="page-title">
             <span className="page-icon">💰</span>
-            Comercialización y Ventas
+            {t('pages.sales.title')}
           </h1>
-          <p className="page-description">Registro y seguimiento de ventas en ferias</p>
+          <p className="page-description">{t('pages.sales.description')}</p>
         </div>
       </div>
 

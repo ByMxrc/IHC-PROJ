@@ -15,16 +15,16 @@
 }
 
 .fair-card {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px var(--shadow-color);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .fair-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 24px var(--shadow-color);
 }
 
 .fair-header {
@@ -36,7 +36,7 @@
 }
 
 .fair-name {
-  color: #2e7d32;
+  color: var(--primary-color);
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0;
@@ -72,7 +72,7 @@
 }
 
 .fair-description {
-  color: #666;
+  color: var(--text-secondary, #666);
   line-height: 1.6;
   margin: 0 0 1.5rem 0;
 }
@@ -85,11 +85,11 @@
 
 .detail-item {
   font-size: 0.95rem;
-  color: #333;
+  color: var(--text-primary, #333);
 }
 
 .detail-item strong {
-  color: #2e7d32;
+  color: var(--primary-color, #2e7d32);
   margin-right: 0.5rem;
 }
 

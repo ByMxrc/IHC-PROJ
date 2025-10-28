@@ -19,7 +19,7 @@
 
 .editor-title {
   font-size: 2rem;
-  color: #2e7d32;
+  color: var(--primary-color);
   margin: 0;
   display: flex;
   align-items: center;
@@ -50,14 +50,14 @@
 }
 
 .btn-save {
-  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+  background: var(--primary-color);
   color: white;
 }
 
 .btn-save:hover {
-  background: linear-gradient(135deg, #1b5e20 0%, #388e3c 100%);
+  opacity: 0.9;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+  box-shadow: 0 4px 12px var(--shadow-color);
 }
 
 .btn-reset {
@@ -72,7 +72,7 @@
 }
 
 .success-message {
-  background: #4caf50;
+  background: var(--primary-color);
   color: white;
   padding: 1rem 1.5rem;
   border-radius: 8px;
@@ -158,26 +158,29 @@
 .form-group label {
   display: block;
   font-weight: 600;
-  color: #333;
+  color: var(--label-text, #333);
   margin-bottom: 0.5rem;
+  font-size: 1.05rem;
 }
 
 .form-input,
 .form-textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid #ddd;
+  border: 2px solid var(--input-border, #ddd);
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-family: inherit;
   transition: border-color 0.3s ease;
   box-sizing: border-box;
+  background: var(--input-bg, white);
+  color: var(--input-text, #212121);
 }
 
 .form-input:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: #4caf50;
+  border-color: var(--input-border-focus, #4caf50);
 }
 
 .form-textarea {

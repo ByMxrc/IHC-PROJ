@@ -4,10 +4,12 @@
 
 import { useState } from 'react';
 import type { Fair } from '../types';
+import { useTranslation } from 'react-i18next';
 import FairForm from '../components/FairForm';
 import './FairsPage.css';
 
 export default function FairsPage() {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const [fairs, setFairs] = useState<Fair[]>([
     {
@@ -43,13 +45,13 @@ export default function FairsPage() {
         <div>
           <h1 className="page-title">
             <span className="page-icon">🎪</span>
-            Gestión de Ferias
+            {t('pages.fairs.title')}
           </h1>
-          <p className="page-description">Calendario y gestión de ferias agroproductivas</p>
+          <p className="page-description">{t('pages.fairs.description')}</p>
         </div>
         {!showForm && (
           <button className="btn btn-primary" onClick={() => setShowForm(true)}>
-            + Nueva Feria
+            {t('tables.stats.newFair')}
           </button>
         )}
       </div>
@@ -63,27 +65,27 @@ export default function FairsPage() {
               <div className="fair-header">
                 <h3 className="fair-name">{fair.name}</h3>
                 <span className={`fair-status status-${fair.status}`}>
-                  {fair.status === 'scheduled' && '📅 Programada'}
-                  {fair.status === 'in-progress' && '🎪 En curso'}
-                  {fair.status === 'completed' && '✅ Completada'}
-                  {fair.status === 'cancelled' && '❌ Cancelada'}
+                  {fair.status === 'scheduled' && `📅 ${t('forms.fair.scheduled')}`}
+                  {fair.status === 'in-progress' && `🎪 ${t('forms.fair.inProgress')}`}
+                  {fair.status === 'completed' && `✅ ${t('forms.fair.completed')}`}
+                  {fair.status === 'cancelled' && `❌ ${t('forms.fair.cancelled')}`}
                 </span>
               </div>
               <p className="fair-description">{fair.description}</p>
               <div className="fair-details">
                 <div className="detail-item">
-                  <strong>📍 Ubicación:</strong> {fair.location}
+                  <strong>📍 {t('tables.fair.location')}:</strong> {fair.location}
                 </div>
                 <div className="detail-item">
-                  <strong>📅 Fecha:</strong>{' '}
+                  <strong>📅 {t('tables.fair.dates')}:</strong>{' '}
                   {new Date(fair.startDate).toLocaleDateString('es-PE')} -{' '}
                   {new Date(fair.endDate).toLocaleDateString('es-PE')}
                 </div>
                 <div className="detail-item">
-                  <strong>👥 Capacidad:</strong> {fair.currentCapacity}/{fair.maxCapacity} stands
+                  <strong>👥 {t('tables.fair.capacity')}:</strong> {fair.currentCapacity}/{fair.maxCapacity} stands
                 </div>
                 <div className="detail-item">
-                  <strong>🏷️ Categorías:</strong>
+                  <strong>🏷️ {t('forms.fair.productCategories')}:</strong>
                   <div className="categories-tags">
                     {fair.productCategories.map((cat) => (
                       <span key={cat} className="category-tag">

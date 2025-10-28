@@ -83,35 +83,37 @@
 .form-label {
   display: block;
   font-weight: 600;
-  color: #333;
+  color: var(--label-text, #333);
   margin-bottom: 0.5rem;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
 }
 
 .form-input {
   width: 100%;
   padding: 0.875rem;
-  border: 2px solid #ddd;
+  border: 2px solid var(--input-border, #ddd);
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-family: inherit;
   transition: all 0.3s ease;
   min-height: 44px;
+  background: var(--input-bg, white);
+  color: var(--input-text, #212121);
 }
 
 .form-input:hover {
-  border-color: #bbb;
+  border-color: var(--input-border-hover, #bbb);
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #4caf50;
+  border-color: var(--input-border-focus, #4caf50);
   box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
 .form-input.error {
-  border-color: #f44336;
-  background-color: #ffebee;
+  border-color: var(--input-error-border, #f44336);
+  background-color: var(--input-error-bg, #ffebee);
 }
 
 .form-input.error:focus {
@@ -119,7 +121,7 @@
 }
 
 .form-input::placeholder {
-  color: #999;
+  color: var(--input-placeholder, #999);
 }
 
 .error-message {

@@ -179,15 +179,6 @@ export default function Login() {
           >
             {isSubmitting ? 'Iniciando sesión...' : 'Iniciar Sesión'}
           </button>
-
-          <div className="login-info">
-            <div className="info-icon">ℹ️</div>
-            <div className="info-content">
-              <strong>Credenciales de prueba:</strong>
-              <div>Usuario: <code>admin</code></div>
-              <div>Contraseña: <code>admin123</code></div>
-            </div>
-          </div>
         </form>
 
         <footer className="login-footer">

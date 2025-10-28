@@ -15,6 +15,7 @@ import { useState } from 'react';
 import type { MenuOption } from './types';
 import { AuthProvider } from './context/AuthContext';
 import { HomeContentProvider } from './context/HomeContentContext';
+import { AccessibilityProvider } from './context/AccessibilityContext';
 import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
 import ProducersPage from './pages/ProducersPage';
@@ -61,8 +62,10 @@ function AppContent() {
       <footer className="app-footer">
         <div className="footer-content">
           <p>
-            © 2025 Sistema de Gestión de Ferias Agroproductivas | 
-            Desarrollado con estándares ISO 9241-11 y ISO 9241-210
+            © 2025 Sistema de Gestión de Ferias Agroproductivas
+          </p>
+          <p className="footer-contact">
+            📧 contacto@agroferia.com | 📱 +593 99 123 4567
           </p>
         </div>
       </footer>
@@ -72,11 +75,13 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <HomeContentProvider>
-        <AppContent />
-      </HomeContentProvider>
-    </AuthProvider>
+    <AccessibilityProvider>
+      <AuthProvider>
+        <HomeContentProvider>
+          <AppContent />
+        </HomeContentProvider>
+      </AuthProvider>
+    </AccessibilityProvider>
   );
 }
 

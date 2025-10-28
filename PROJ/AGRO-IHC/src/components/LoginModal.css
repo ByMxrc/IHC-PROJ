@@ -29,9 +29,9 @@
 }
 
 .modal-content {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 16px;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 48px var(--shadow-color);
   width: 100%;
   max-width: 450px;
   max-height: 90vh;
@@ -51,7 +51,7 @@
 }
 
 .modal-header {
-  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+  background: var(--primary-color);
   color: white;
   padding: 1.5rem 2rem;
   border-radius: 16px 16px 0 0;
@@ -101,6 +101,7 @@
 
 .login-modal-form {
   padding: 2rem;
+  background: var(--bg-primary);
 }
 
 .login-error-banner {
@@ -135,36 +136,38 @@
 .form-label {
   display: block;
   font-weight: 600;
-  color: #333;
+  color: var(--label-text, var(--text-primary));
   margin-bottom: 0.5rem;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
 }
 
 .form-input {
   width: 100%;
   padding: 0.875rem;
-  border: 2px solid #ddd;
+  border: 2px solid var(--input-border, #ddd);
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-family: inherit;
   transition: all 0.3s ease;
   min-height: 44px;
   box-sizing: border-box;
+  background: var(--input-bg, white);
+  color: var(--input-text, #212121);
 }
 
 .form-input:hover {
-  border-color: #bbb;
+  border-color: var(--input-border-hover, #bbb);
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #4caf50;
-  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+  border-color: var(--input-border-focus, var(--primary-color));
+  box-shadow: 0 0 0 3px var(--shadow-color);
 }
 
 .form-input.error {
-  border-color: #f44336;
-  background-color: #ffebee;
+  border-color: var(--input-error-border, #f44336);
+  background-color: var(--input-error-bg, #ffebee);
 }
 
 .form-input.error:focus {
@@ -172,7 +175,7 @@
 }
 
 .form-input::placeholder {
-  color: #999;
+  color: var(--input-placeholder, #999);
 }
 
 .error-message {
@@ -192,7 +195,7 @@
 
 .btn-login-modal {
   width: 100%;
-  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+  background: var(--primary-color);
   color: white;
   border: none;
   padding: 1rem;
@@ -206,13 +209,13 @@
 }
 
 .btn-login-modal:hover:not(:disabled) {
-  background: linear-gradient(135deg, #1b5e20 0%, #388e3c 100%);
+  opacity: 0.9;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+  box-shadow: 0 4px 12px var(--shadow-color);
 }
 
 .btn-login-modal:focus {
-  outline: 2px solid #2e7d32;
+  outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
 

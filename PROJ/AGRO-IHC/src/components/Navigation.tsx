@@ -1,20 +1,18 @@
 /**
- * Componente de Navegación Principal
- * ETAPA 3: DESARROLLO PROTOTIPO - Diseño menú con parámetros de usabilidad
- * ISO 9241-210: Diseño centrado en el usuario
- * 
- * Parámetros de usabilidad implementados:
- * - Navegación clara y consistente
- * - Feedback visual al hover y selección
- * - Accesibilidad con ARIA labels
- * - Responsive design para dispositivos móviles
- * - Contraste de colores adecuado
+ * Componente de Navegación con Accesibilidad Mejorada
+ * - Navbar desplegable
+ * - Controles de tema e idioma
+ * - Login en esquina superior derecha
  */
 
 import { useState } from 'react';
 import type { MenuOption } from '../types';
 import { useAuth } from '../context/AuthContext';
+import { useAccessibility } from '../context/AccessibilityContext';
+import { useTranslation } from 'react-i18next';
+import type { ThemeMode, Language } from '../types';
 import LoginModal from './LoginModal';
+import logo from '../img/logo.png';
 import './Navigation.css';
 
 interface NavigationProps {
@@ -23,166 +21,216 @@ interface NavigationProps {
 }
 
 export default function Navigation({ currentPage, onNavigate }: NavigationProps) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showThemeMenu, setShowThemeMenu] = useState(false);
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+  
   const { user, logout, isAuthenticated } = useAuth();
+  const { theme, language, setTheme, setLanguage } = useAccessibility();
+  const { t } = useTranslation();
 
-  const menuItems: { key: MenuOption; label: string; icon: string }[] = [
-    { key: 'home', label: 'Inicio', icon: '🏠' },
-    { key: 'producers', label: 'Productores', icon: '👨‍🌾' },
-    { key: 'fairs', label: 'Ferias', icon: '🎪' },
-    { key: 'registrations', label: 'Inscripciones', icon: '📝' },
-    { key: 'transport', label: 'Transporte', icon: '🚚' },
-    { key: 'sales', label: 'Ventas', icon: '💰' },
-    { key: 'reports', label: 'Reportes', icon: '📊' },
+  const menuItems: { key: MenuOption; labelKey: string; icon: string }[] = [
+    { key: 'home', labelKey: 'nav.home', icon: '🏠' },
+    { key: 'producers', labelKey: 'nav.producers', icon: '👨‍🌾' },
+    { key: 'fairs', labelKey: 'nav.fairs', icon: '🎪' },
+    { key: 'registrations', labelKey: 'nav.registrations', icon: '📝' },
+    { key: 'transport', labelKey: 'nav.transport', icon: '🚚' },
+    { key: 'sales', labelKey: 'nav.sales', icon: '💰' },
+    { key: 'reports', labelKey: 'nav.reports', icon: '📊' },
   ];
 
-  // Opciones solo para admin
-  const adminMenuItems: { key: MenuOption; label: string; icon: string }[] = [
-    { key: 'edit-home', label: 'Editar Inicio', icon: '✏️' },
+  const adminMenuItems: { key: MenuOption; labelKey: string; icon: string }[] = [
+    { key: 'edit-home', labelKey: 'nav.editHome', icon: '✏️' },
+  ];
+
+  const themeOptions: { value: ThemeMode; labelKey: string; icon: string }[] = [
+    { value: 'light', labelKey: 'accessibility.light', icon: '☀️' },
+    { value: 'dark', labelKey: 'accessibility.dark', icon: '🌙' },
+    { value: 'deuteranopia', labelKey: 'accessibility.deuteranopia', icon: '🟢' },
+    { value: 'protanopia', labelKey: 'accessibility.protanopia', icon: '🔴' },
+    { value: 'tritanopia', labelKey: 'accessibility.tritanopia', icon: '🔵' },
+  ];
+
+  const languageOptions: { value: Language; label: string; flag: string }[] = [
+    { value: 'es', label: 'Español', flag: '🇪🇸' },
+    { value: 'en', label: 'English', flag: '🇺🇸' },
   ];
 
   const handleNavigation = (page: MenuOption) => {
-    // Si no está autenticado y hace clic en algo diferente de "Inicio", mostrar login
     if (!isAuthenticated && page !== 'home') {
       setShowLoginModal(true);
-      setIsMobileMenuOpen(false);
       return;
     }
     
     onNavigate(page);
-    setIsMobileMenuOpen(false);
-  };
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setIsNavExpanded(false);
   };
 
   const handleLogout = () => {
-    if (window.confirm('¿Está seguro que desea cerrar sesión?')) {
+    if (window.confirm(t('common.confirm'))) {
       logout();
-      setIsMobileMenuOpen(false);
-      onNavigate('home'); // Volver al inicio
+      onNavigate('home');
     }
   };
 
   const handleLoginClick = () => {
     setShowLoginModal(true);
-    setIsMobileMenuOpen(false);
+  };
+
+  const toggleNav = () => {
+    setIsNavExpanded(!isNavExpanded);
+  };
+
+  const handleThemeChange = (newTheme: ThemeMode) => {
+    setTheme(newTheme);
+    setShowThemeMenu(false);
+  };
+
+  const handleLanguageChange = (newLanguage: Language) => {
+    setLanguage(newLanguage);
+    setShowLanguageMenu(false);
   };
 
   return (
     <>
-      <nav className="navigation" role="navigation" aria-label="Navegación principal">
-        <div className="nav-container">
-          <div className="nav-header">
-            <h1 className="nav-logo">
-              <span className="logo-icon">🌾</span>
-              AgroFeria
-            </h1>
-            
-            {/* Botón menú móvil - REQUISITO: Diseño responsive */}
-            <button
-              className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
-              onClick={toggleMobileMenu}
-              aria-label="Abrir menú de navegación"
-              aria-expanded={isMobileMenuOpen}
-            >
-              <span className="hamburger-line"></span>
-              <span className="hamburger-line"></span>
-              <span className="hamburger-line"></span>
-            </button>
+      {/* Top Bar Compacta */}
+      <div className="top-bar">
+        <div className="top-bar-content">
+          {/* Logo */}
+          <div className="top-bar-logo" onClick={() => handleNavigation('home')}>
+            <img src={logo} alt="AgroFeria Logo" className="logo-icon" />
+            <span className="logo-text">AgroFeria</span>
           </div>
 
-          {/* Menú principal - REQUISITO: Navegación clara */}
-          <ul className={`nav-menu ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
-            {menuItems.map((item) => {
-              // Solo mostrar "Inicio" si no está autenticado
-              if (!isAuthenticated && item.key !== 'home') {
-                return null;
-              }
-              
-              return (
-                <li key={item.key} className="nav-item">
-                  <button
-                    className={`nav-link ${currentPage === item.key ? 'active' : ''}`}
-                    onClick={() => handleNavigation(item.key)}
-                    aria-current={currentPage === item.key ? 'page' : undefined}
-                    title={item.label}
-                  >
-                    <span className="nav-icon" aria-hidden="true">
-                      {item.icon}
-                    </span>
-                    <span className="nav-label">{item.label}</span>
-                  </button>
-                </li>
-              );
-            })}
-            
-            {/* Opciones de administrador */}
-            {isAuthenticated && user?.username === 'admin' && adminMenuItems.map((item) => (
-              <li key={item.key} className="nav-item">
+          {/* Controles de Accesibilidad */}
+          <div className="top-bar-controls">
+            {/* Selector de Tema */}
+            <div className="control-dropdown">
+              <button
+                className="control-btn"
+                onClick={() => setShowThemeMenu(!showThemeMenu)}
+                title={t('accessibility.theme')}
+              >
+                <span className="control-icon">
+                  {theme === 'light' && '☀️'}
+                  {theme === 'dark' && '🌙'}
+                  {theme === 'deuteranopia' && '🟢'}
+                  {theme === 'protanopia' && '🔴'}
+                  {theme === 'tritanopia' && '🔵'}
+                </span>
+                <span className="control-label">{t('accessibility.theme')}</span>
+              </button>
+              {showThemeMenu && (
+                <div className="dropdown-menu">
+                  {themeOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      className={`dropdown-item ${theme === option.value ? 'active' : ''}`}
+                      onClick={() => handleThemeChange(option.value)}
+                    >
+                      <span className="dropdown-icon">{option.icon}</span>
+                      <span>{t(option.labelKey)}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Selector de Idioma */}
+            <div className="control-dropdown">
+              <button
+                className="control-btn"
+                onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                title={t('accessibility.language')}
+              >
+                <span className="control-label">{language === 'es' ? 'ES' : 'US'}</span>
+              </button>
+              {showLanguageMenu && (
+                <div className="dropdown-menu">
+                  {languageOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      className={`dropdown-item ${language === option.value ? 'active' : ''}`}
+                      onClick={() => handleLanguageChange(option.value)}
+                    >
+                      <span>{option.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Botón de Login / Usuario */}
+            {!isAuthenticated ? (
+              <button className="btn-login-top" onClick={handleLoginClick}>
+                <span className="btn-icon">🔐</span>
+                <span className="btn-label">{t('nav.login')}</span>
+              </button>
+            ) : (
+              <div className="user-menu">
+                <div className="user-info">
+                  <span className="user-icon">👤</span>
+                  <span className="user-name">{user?.username}</span>
+                </div>
+                <button className="btn-logout-top" onClick={handleLogout}>
+                  <span className="btn-icon">🚪</span>
+                  <span className="btn-label">{t('nav.logout')}</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Botón para expandir/contraer navegación */}
+        {isAuthenticated && (
+          <button
+            className={`nav-toggle-btn ${isNavExpanded ? 'expanded' : ''}`}
+            onClick={toggleNav}
+            aria-label="Toggle navigation"
+          >
+            <span className="toggle-icon">{isNavExpanded ? '▲' : '▼'}</span>
+          </button>
+        )}
+      </div>
+
+      {/* Navegación Principal (Desplegable) */}
+      {isAuthenticated && (
+        <nav
+          className={`main-navigation ${isNavExpanded ? 'expanded' : ''}`}
+          role="navigation"
+          aria-label="Main navigation"
+        >
+          <div className="nav-content">
+            <div className="nav-menu-grid">
+              {menuItems.map((item) => (
                 <button
-                  className={`nav-link nav-admin ${currentPage === item.key ? 'active' : ''}`}
+                  key={item.key}
+                  className={`nav-menu-item ${currentPage === item.key ? 'active' : ''}`}
                   onClick={() => handleNavigation(item.key)}
                   aria-current={currentPage === item.key ? 'page' : undefined}
-                  title={item.label}
                 >
-                  <span className="nav-icon" aria-hidden="true">
-                    {item.icon}
-                  </span>
-                  <span className="nav-label">{item.label}</span>
+                  <span className="nav-item-icon">{item.icon}</span>
+                  <span className="nav-item-label">{t(item.labelKey)}</span>
                 </button>
-              </li>
-            ))}
-            
-            {/* Si está autenticado, mostrar usuario y logout */}
-            {isAuthenticated && (
-              <>
-                {/* Separador */}
-                <li className="nav-divider" role="separator"></li>
-                
-                {/* Usuario */}
-                <li className="nav-item nav-user-item">
-                  <div className="nav-user-info">
-                    <span className="nav-user-icon" aria-hidden="true">👤</span>
-                    <span className="nav-user-name">{user?.username}</span>
-                  </div>
-                </li>
-                
-                {/* Logout */}
-                <li className="nav-item">
-                  <button
-                    className="nav-link nav-logout"
-                    onClick={handleLogout}
-                    title="Cerrar sesión"
-                  >
-                    <span className="nav-icon" aria-hidden="true">🚪</span>
-                    <span className="nav-label">Salir</span>
-                  </button>
-                </li>
-              </>
-            )}
-            
-            {/* Si no está autenticado, mostrar botón de Login */}
-            {!isAuthenticated && (
-              <>
-                <li className="nav-divider" role="separator"></li>
-                <li className="nav-item">
-                  <button
-                    className="nav-link nav-login"
-                    onClick={handleLoginClick}
-                    title="Iniciar sesión"
-                  >
-                    <span className="nav-icon" aria-hidden="true">🔐</span>
-                    <span className="nav-label">Iniciar Sesión</span>
-                  </button>
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
-      </nav>
+              ))}
+              
+              {/* Admin options */}
+              {user?.username === 'admin' && adminMenuItems.map((item) => (
+                <button
+                  key={item.key}
+                  className={`nav-menu-item nav-admin-item ${currentPage === item.key ? 'active' : ''}`}
+                  onClick={() => handleNavigation(item.key)}
+                  aria-current={currentPage === item.key ? 'page' : undefined}
+                >
+                  <span className="nav-item-icon">{item.icon}</span>
+                  <span className="nav-item-label">{t(item.labelKey)}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </nav>
+      )}
 
       {/* Modal de Login */}
       <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />

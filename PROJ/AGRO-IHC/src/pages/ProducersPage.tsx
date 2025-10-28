@@ -4,10 +4,12 @@
 
 import { useState } from 'react';
 import type { Producer } from '../types';
+import { useTranslation } from 'react-i18next';
 import ProducerForm from '../components/ProducerForm';
 import './ProducersPage.css';
 
 export default function ProducersPage() {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const [producers, setProducers] = useState<Producer[]>([
     {
@@ -46,9 +48,9 @@ export default function ProducersPage() {
 
   const getStatusBadge = (status: string) => {
     const badges = {
-      active: { label: 'Activo', class: 'status-active' },
-      inactive: { label: 'Inactivo', class: 'status-inactive' },
-      pending: { label: 'Pendiente', class: 'status-pending' },
+      active: { label: t('forms.producer.active'), class: 'status-active' },
+      inactive: { label: t('forms.producer.inactive'), class: 'status-inactive' },
+      pending: { label: t('forms.producer.pending'), class: 'status-pending' },
     };
     return badges[status as keyof typeof badges] || badges.pending;
   };
@@ -59,15 +61,15 @@ export default function ProducersPage() {
         <div>
           <h1 className="page-title">
             <span className="page-icon">👨‍🌾</span>
-            Gestión de Productores
+            {t('pages.producers.title')}
           </h1>
           <p className="page-description">
-            Administre el registro de productores agrícolas del sistema
+            {t('pages.producers.description')}
           </p>
         </div>
         {!showForm && (
           <button className="btn btn-primary" onClick={() => setShowForm(true)}>
-            + Nuevo Productor
+            {t('tables.stats.newProducer')}
           </button>
         )}
       </div>
@@ -79,35 +81,35 @@ export default function ProducersPage() {
           <div className="stats-cards">
             <div className="stat-card">
               <div className="stat-value">{producers.length}</div>
-              <div className="stat-label">Total Productores</div>
+              <div className="stat-label">{t('tables.stats.totalProducers')}</div>
             </div>
             <div className="stat-card">
               <div className="stat-value">
                 {producers.filter((p) => p.status === 'active').length}
               </div>
-              <div className="stat-label">Activos</div>
+              <div className="stat-label">{t('tables.stats.active')}</div>
             </div>
             <div className="stat-card">
               <div className="stat-value">
                 {producers.filter((p) => p.status === 'pending').length}
               </div>
-              <div className="stat-label">Pendientes</div>
+              <div className="stat-label">{t('tables.stats.pending')}</div>
             </div>
           </div>
 
           <div className="producers-list">
-            <h2 className="list-title">Lista de Productores</h2>
+            <h2 className="list-title">{t('pages.producers.title')}</h2>
             <div className="table-responsive">
               <table className="data-table">
                 <thead>
                   <tr>
-                    <th>Nombre</th>
-                    <th>Documento</th>
-                    <th>Contacto</th>
-                    <th>Ubicación</th>
-                    <th>Productos</th>
-                    <th>Hectáreas</th>
-                    <th>Estado</th>
+                    <th>{t('tables.producer.name')}</th>
+                    <th>{t('tables.producer.documentNumber')}</th>
+                    <th>{t('tables.producer.email')}</th>
+                    <th>{t('tables.producer.location')}</th>
+                    <th>{t('tables.producer.productTypes')}</th>
+                    <th>{t('tables.producer.farmSize')}</th>
+                    <th>{t('tables.producer.status')}</th>
                   </tr>
                 </thead>
                 <tbody>

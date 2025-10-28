@@ -9,11 +9,11 @@
 }
 
 .empty-state {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 12px;
   padding: 4rem 2rem;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px var(--shadow-color);
 }
 
 .empty-icon {
@@ -23,12 +23,12 @@
 }
 
 .empty-state h2 {
-  color: #666;
+  color: var(--text-secondary);
   margin: 0 0 0.5rem 0;
 }
 
 .empty-state p {
-  color: #999;
+  color: var(--text-tertiary, #999);
   margin: 0;
 }
 

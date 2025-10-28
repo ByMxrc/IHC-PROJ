@@ -167,6 +167,16 @@ export const CANTONES_POR_PROVINCIA: Record<string, string[]> = {
   'Zamora Chinchipe': ['Zamora', 'Yantzaza', 'Chinchipe', 'El Pangui', 'Nangaritza'],
 };
 
+// CONTEXTO: Temas de accesibilidad
+export type ThemeMode = 'light' | 'dark' | 'deuteranopia' | 'protanopia' | 'tritanopia';
+
+export type Language = 'es' | 'en';
+
+export interface AccessibilitySettings {
+  theme: ThemeMode;
+  language: Language;
+}
+
 // CONTEXTO: Contenido editable de la página de inicio
 export interface FeatureCard {
   id: string;
@@ -200,38 +210,81 @@ export const DEFAULT_HOME_CONTENT: HomeContent = {
   heroSubtitle: 'Conectando productores agrícolas con oportunidades de comercialización',
   contextTitle: '¿Qué son las Ferias Agroproductivas?',
   contextParagraphs: [
-    'Las ferias agroproductivas son eventos que reúnen a productores agrícolas locales con consumidores, comerciantes y otros actores del sector agrícola. Estos espacios permiten la comercialización directa de productos frescos, procesados y artesanales, fortaleciendo la economía local y promoviendo la agricultura sostenible.',
-    'En Ecuador, las ferias agroproductivas han cobrado gran importancia como mecanismo para acortar la cadena de comercialización, garantizando precios justos tanto para productores como para consumidores, y fomentando el consumo de productos locales de calidad.'
+    'Las ferias agroproductivas conectan productores locales con consumidores, fortaleciendo la economía local.',
+    'En Ecuador, estas ferias garantizan precios justos y fomentan productos locales de calidad.'
   ],
-  missionText: 'Facilitar la gestión integral de ferias agroproductivas mediante un sistema digital que optimiza la organización, inscripción, logística y comercialización, conectando de manera eficiente a todos los actores involucrados en el proceso y contribuyendo al desarrollo del sector agrícola ecuatoriano.',
+  missionText: 'Facilitar la gestión de ferias agroproductivas mediante un sistema digital eficiente.',
   featureCards: [
-    { id: '1', icon: '👨‍🌾', title: 'Inscripción de Productores', description: 'Registro completo de productores agrícolas con validación de datos y gestión de perfiles.', order: 1 },
-    { id: '2', icon: '🎪', title: 'Calendario de Ferias', description: 'Gestión de ferias agroproductivas con fechas, ubicaciones y capacidad de participantes.', order: 2 },
-    { id: '3', icon: '📝', title: 'Inscripciones', description: 'Sistema de inscripción a ferias con gestión de cupos y confirmación automática.', order: 3 },
-    { id: '4', icon: '🚚', title: 'Logística de Transporte', description: 'Coordinación de transporte para productos desde el origen hasta la feria.', order: 4 },
-    { id: '5', icon: '💰', title: 'Comercialización', description: 'Registro de ventas y seguimiento del rendimiento de cada productor.', order: 5 },
-    { id: '6', icon: '📊', title: 'Reportes', description: 'Análisis y estadísticas para mejorar la toma de decisiones.', order: 6 },
+    { id: '1', icon: '👨‍🌾', title: 'Inscripción de Productores', description: 'Registro de productores agrícolas con validación de datos.', order: 1 },
+    { id: '2', icon: '🎪', title: 'Calendario de Ferias', description: 'Gestión de ferias con fechas y ubicaciones.', order: 2 },
+    { id: '3', icon: '📝', title: 'Inscripciones', description: 'Sistema de inscripción con gestión de cupos.', order: 3 },
+    { id: '4', icon: '🚚', title: 'Logística de Transporte', description: 'Coordinación de transporte para productos.', order: 4 },
+    { id: '5', icon: '💰', title: 'Comercialización', description: 'Registro de ventas y seguimiento.', order: 5 },
+    { id: '6', icon: '📊', title: 'Reportes', description: 'Análisis y estadísticas.', order: 6 },
   ],
   benefitCards: [
     { 
       id: '1', 
       icon: '🌱', 
       title: 'Para Productores', 
-      benefits: ['Acceso directo al mercado', 'Mejores precios por sus productos', 'Visibilidad de su trabajo', 'Networking con otros productores'],
+      benefits: ['Acceso directo al mercado', 'Mejores precios', 'Visibilidad', 'Networking'],
       order: 1
     },
     { 
       id: '2', 
       icon: '🛒', 
       title: 'Para Consumidores', 
-      benefits: ['Productos frescos y de calidad', 'Precios competitivos', 'Conocimiento del origen de alimentos', 'Apoyo a la economía local'],
+      benefits: ['Productos frescos', 'Precios justos', 'Origen conocido', 'Apoyo local'],
       order: 2
     },
     { 
       id: '3', 
       icon: '🏘️', 
       title: 'Para la Comunidad', 
-      benefits: ['Fortalecimiento económico local', 'Promoción de cultura alimentaria', 'Espacios de encuentro social', 'Desarrollo rural sostenible'],
+      benefits: ['Economía local', 'Cultura alimentaria', 'Encuentro social', 'Desarrollo rural'],
+      order: 3
+    },
+  ],
+};
+
+// Contenido por defecto en inglés
+export const DEFAULT_HOME_CONTENT_EN: HomeContent = {
+  heroTitle: 'Agricultural Fair Management System',
+  heroSubtitle: 'Connecting agricultural producers with marketing opportunities',
+  contextTitle: 'What are Agricultural Fairs?',
+  contextParagraphs: [
+    'Agricultural fairs connect local producers with consumers, strengthening the local economy.',
+    'In Ecuador, these fairs ensure fair prices and promote quality local products.'
+  ],
+  missionText: 'To facilitate the management of agricultural fairs through an efficient digital system.',
+  featureCards: [
+    { id: '1', icon: '👨‍🌾', title: 'Producer Registration', description: 'Agricultural producer registration with data validation.', order: 1 },
+    { id: '2', icon: '🎪', title: 'Fair Calendar', description: 'Fair management with dates and locations.', order: 2 },
+    { id: '3', icon: '📝', title: 'Registrations', description: 'Registration system with quota management.', order: 3 },
+    { id: '4', icon: '🚚', title: 'Transport Logistics', description: 'Product transport coordination.', order: 4 },
+    { id: '5', icon: '💰', title: 'Marketing', description: 'Sales recording and tracking.', order: 5 },
+    { id: '6', icon: '📊', title: 'Reports', description: 'Analysis and statistics.', order: 6 },
+  ],
+  benefitCards: [
+    { 
+      id: '1', 
+      icon: '🌱', 
+      title: 'For Producers', 
+      benefits: ['Direct market access', 'Better prices', 'Visibility', 'Networking'],
+      order: 1
+    },
+    { 
+      id: '2', 
+      icon: '🛒', 
+      title: 'For Consumers', 
+      benefits: ['Fresh products', 'Fair prices', 'Known origin', 'Local support'],
+      order: 2
+    },
+    { 
+      id: '3', 
+      icon: '🏘️', 
+      title: 'For the Community', 
+      benefits: ['Local economy', 'Food culture', 'Social gathering', 'Rural development'],
       order: 3
     },
   ],

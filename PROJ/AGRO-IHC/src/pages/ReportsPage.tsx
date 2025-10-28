@@ -2,18 +2,21 @@
  * Página de Reportes
  */
 
+import { useTranslation } from 'react-i18next';
 import './ReportsPage.css';
 
 export default function ReportsPage() {
+  const { t } = useTranslation();
+  
   return (
     <div className="reports-page">
       <div className="page-header">
         <div>
           <h1 className="page-title">
             <span className="page-icon">📊</span>
-            Reportes y Estadísticas
+            {t('pages.reports.title')}
           </h1>
-          <p className="page-description">Análisis y métricas del sistema</p>
+          <p className="page-description">{t('pages.reports.description')}</p>
         </div>
       </div>
 

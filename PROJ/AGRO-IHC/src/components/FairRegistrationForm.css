@@ -30,29 +30,29 @@
 }
 
 .checkbox-label-block:hover {
-  border-color: #4caf50;
+  border-color: var(--primary-color, #4caf50);
   background: rgba(76, 175, 80, 0.05);
 }
 
 .checkbox-label-block input:checked + .checkbox-text {
   font-weight: 600;
-  color: #2e7d32;
+  color: var(--primary-color, #2e7d32);
 }
 
 .help-text {
   margin: 0.5rem 0 0 0;
   font-size: 0.875rem;
-  color: #666;
+  color: var(--text-secondary, #666);
   font-style: italic;
 }
 
 .info-message {
-  background: #e3f2fd;
-  border-left: 4px solid #2196f3;
+  background: var(--bg-tertiary, #e3f2fd);
+  border-left: 4px solid var(--secondary-color, #2196f3);
   padding: 0.75rem;
   border-radius: 4px;
   font-size: 0.9rem;
-  color: #1565c0;
+  color: var(--secondary-color, #1565c0);
   margin-top: 0.5rem;
 }
 

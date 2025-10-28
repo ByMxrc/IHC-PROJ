@@ -5,41 +5,32 @@
 
 import { useAuth } from '../context/AuthContext';
 import { useHomeContent } from '../context/HomeContentContext';
+import { useTranslation } from 'react-i18next';
+import logo from '../img/logo.png';
 import './HomePage.css';
 
 export default function HomePage() {
   const { isAuthenticated, user } = useAuth();
   const { content } = useHomeContent();
+  const { t } = useTranslation();
 
   return (
     <div className="home-page">
       <section className="hero-section">
         <div className="hero-content">
           <h1 className="hero-title">
-            <span className="hero-icon">🌾</span>
+            <img src={logo} alt="AgroFeria Logo" className="hero-icon" />
             {content.heroTitle}
           </h1>
           <p className="hero-subtitle">
             {content.heroSubtitle}
           </p>
           
-          {!isAuthenticated && (
-            <div className="login-prompt">
-              <p className="login-prompt-text">
-                <span className="prompt-icon">🔐</span>
-                Para acceder a todas las funcionalidades del sistema, por favor inicie sesión.
-              </p>
-              <p className="login-prompt-hint">
-                Haga clic en el botón <strong>"Iniciar Sesión"</strong> en el menú superior.
-              </p>
-            </div>
-          )}
-          
           {isAuthenticated && (
             <div className="welcome-message">
               <p className="welcome-text">
                 <span className="welcome-icon">👋</span>
-                ¡Bienvenido, <strong>{user?.username}</strong>!
+                {t('home.welcome')} <strong>{user?.username}</strong>!
               </p>
             </div>
           )}
@@ -47,7 +38,7 @@ export default function HomePage() {
       </section>
 
       <section className="features-section">
-        <h2 className="section-title">Funcionalidades del Sistema</h2>
+        <h2 className="section-title">{t('home.features')}</h2>
         <div className="features-grid">
           {content.featureCards
             .sort((a, b) => a.order - b.order)
@@ -91,7 +82,7 @@ export default function HomePage() {
       </section>
 
       <section className="mission-section">
-        <h2 className="section-title">Nuestra Misión</h2>
+        <h2 className="section-title">{t('home.mission')}</h2>
         <div className="mission-content">
           <p className="mission-text">
             <span className="mission-icon">🎯</span>

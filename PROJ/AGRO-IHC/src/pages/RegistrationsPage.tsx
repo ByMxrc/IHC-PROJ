@@ -3,10 +3,12 @@
  */
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import FairRegistrationForm from '../components/FairRegistrationForm';
 import './RegistrationsPage.css';
 
 export default function RegistrationsPage() {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
 
   // Datos de ejemplo
@@ -37,9 +39,9 @@ export default function RegistrationsPage() {
         <div>
           <h1 className="page-title">
             <span className="page-icon">📝</span>
-            Inscripciones a Ferias
+            {t('pages.registrations.title')}
           </h1>
-          <p className="page-description">Gestión de inscripciones de productores a ferias</p>
+          <p className="page-description">{t('pages.registrations.description')}</p>
         </div>
         {!showForm && (
           <button className="btn btn-primary" onClick={() => setShowForm(true)}>

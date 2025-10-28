@@ -9,25 +9,25 @@
 }
 
 .info-card {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px var(--shadow-color);
 }
 
 .info-card h2 {
-  color: #2e7d32;
+  color: var(--primary-color);
   margin: 0 0 1rem 0;
 }
 
 .info-card p {
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin: 0 0 1rem 0;
 }
 
 .info-card ul {
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.8;
 }
 

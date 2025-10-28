@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limpiar LocalStorage - AgroFeria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .success {
+            display: none;
+            color: #4caf50;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗑️ Limpiar Contenido Guardado</h1>
+        <p>Esta herramienta eliminará el contenido guardado en el navegador y restaurará los textos predeterminados más cortos.</p>
+        <button onclick="clearStorage()">Limpiar y Recargar</button>
+        <div class="success" id="success">✅ ¡Listo! Recargando...</div>
+    </div>
+
+    <script>
+        function clearStorage() {
+            // Obtener el contenido actual o crear uno nuevo
+            const newContent = {
+                es: {
+                    heroTitle: 'Sistema de Gestión de Ferias Agroproductivas',
+                    heroSubtitle: 'Conectando productores agrícolas con oportunidades de comercialización',
+                    contextTitle: '¿Qué son las Ferias Agroproductivas?',
+                    contextParagraphs: [
+                        'Las ferias agroproductivas conectan productores locales con consumidores, fortaleciendo la economía local.',
+                        'En Ecuador, estas ferias garantizan precios justos y fomentan productos locales de calidad.'
+                    ],
+                    missionText: 'Facilitar la gestión de ferias agroproductivas mediante un sistema digital eficiente.',
+                    featureCards: [
+                        { id: '1', icon: '👨‍🌾', title: 'Inscripción de Productores', description: 'Registro completo de productores agrícolas con validación de datos.', order: 1 },
+                        { id: '2', icon: '🎪', title: 'Calendario de Ferias', description: 'Gestión de ferias con fechas, ubicaciones y capacidad.', order: 2 },
+                        { id: '3', icon: '📝', title: 'Inscripciones', description: 'Sistema de inscripción con gestión de cupos.', order: 3 },
+                        { id: '4', icon: '🚚', title: 'Logística de Transporte', description: 'Coordinación de transporte para productos.', order: 4 },
+                        { id: '5', icon: '💰', title: 'Comercialización', description: 'Registro de ventas y seguimiento.', order: 5 },
+                        { id: '6', icon: '📊', title: 'Reportes', description: 'Análisis y estadísticas.', order: 6 },
+                    ],
+                    benefitCards: [
+                        { id: '1', icon: '🌱', title: 'Para Productores', benefits: ['Acceso directo al mercado', 'Mejores precios', 'Visibilidad', 'Networking'], order: 1 },
+                        { id: '2', icon: '🛒', title: 'Para Consumidores', benefits: ['Productos frescos', 'Precios justos', 'Origen conocido', 'Apoyo local'], order: 2 },
+                        { id: '3', icon: '🏘️', title: 'Para la Comunidad', benefits: ['Economía local', 'Cultura alimentaria', 'Encuentro social', 'Desarrollo rural'], order: 3 },
+                    ],
+                },
+                en: {
+                    heroTitle: 'Agricultural Fair Management System',
+                    heroSubtitle: 'Connecting agricultural producers with marketing opportunities',
+                    contextTitle: 'What are Agricultural Fairs?',
+                    contextParagraphs: [
+                        'Agricultural fairs connect local producers with consumers, strengthening the local economy.',
+                        'In Ecuador, these fairs ensure fair prices and promote quality local products.'
+                    ],
+                    missionText: 'To facilitate the management of agricultural fairs through an efficient digital system.',
+                    featureCards: [
+                        { id: '1', icon: '👨‍🌾', title: 'Producer Registration', description: 'Complete producer registration with data validation.', order: 1 },
+                        { id: '2', icon: '🎪', title: 'Fair Calendar', description: 'Fair management with dates, locations and capacity.', order: 2 },
+                        { id: '3', icon: '📝', title: 'Registrations', description: 'Registration system with quota management.', order: 3 },
+                        { id: '4', icon: '🚚', title: 'Transport Logistics', description: 'Product transport coordination.', order: 4 },
+                        { id: '5', icon: '💰', title: 'Marketing', description: 'Sales recording and tracking.', order: 5 },
+                        { id: '6', icon: '📊', title: 'Reports', description: 'Analysis and statistics.', order: 6 },
+                    ],
+                    benefitCards: [
+                        { id: '1', icon: '🌱', title: 'For Producers', benefits: ['Direct market access', 'Better prices', 'Visibility', 'Networking'], order: 1 },
+                        { id: '2', icon: '🛒', title: 'For Consumers', benefits: ['Fresh products', 'Fair prices', 'Known origin', 'Local support'], order: 2 },
+                        { id: '3', icon: '🏘️', title: 'For the Community', benefits: ['Local economy', 'Food culture', 'Social gathering', 'Rural development'], order: 3 },
+                    ],
+                }
+            };
+            
+            // Guardar el nuevo contenido más corto
+            localStorage.setItem('homeContentMultilang', JSON.stringify(newContent));
+            
+            // Mostrar mensaje
+            document.getElementById('success').style.display = 'block';
+            
+            // Recargar después de 1 segundo
+            setTimeout(() => {
+                window.location.href = 'http://localhost:5174';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

@@ -4,6 +4,7 @@
  */
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { FormEvent, ChangeEvent } from 'react';
 import type { Fair } from '../types';
 import { PROVINCIAS_ECUADOR, CANTONES_POR_PROVINCIA } from '../types';
@@ -23,6 +24,8 @@ interface FairFormProps {
 }
 
 export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
+  const { t } = useTranslation();
+  
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -43,16 +46,16 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const categories = [
-    'Frutas',
-    'Verduras',
-    'Hortalizas',
-    'Tubérculos',
-    'Granos',
-    'Lácteos',
-    'Carnes',
-    'Huevos',
-    'Miel',
-    'Artesanías',
+    t('categories.fruits'),
+    t('categories.vegetables'),
+    t('categories.greens'),
+    t('categories.tubers'),
+    t('categories.grains'),
+    t('categories.dairy'),
+    t('categories.meat'),
+    t('categories.eggs'),
+    t('categories.honey'),
+    t('categories.crafts'),
   ];
 
   // Cantones filtrados según la provincia seleccionada
@@ -107,75 +110,75 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
     switch (field) {
       case 'name':
         if (!validateRequired(formData.name)) {
-          error = 'El nombre de la feria es requerido';
+          error = t('forms.validation.fairNameRequired');
         } else if (!validateMinLength(formData.name, 5)) {
-          error = 'El nombre debe tener al menos 5 caracteres';
+          error = t('forms.validation.fairNameMinLength');
         }
         break;
       case 'description':
         if (!validateRequired(formData.description)) {
-          error = 'La descripción es requerida';
+          error = t('forms.validation.descriptionRequired');
         } else if (!validateMinLength(formData.description, 10)) {
-          error = 'La descripción debe tener al menos 10 caracteres';
+          error = t('forms.validation.descriptionMinLength');
         }
         break;
       case 'location':
         if (!validateRequired(formData.location)) {
-          error = 'La ubicación es requerida';
+          error = t('forms.validation.locationRequired');
         } else if (!validateMinLength(formData.location, 3)) {
-          error = 'La ubicación debe tener al menos 3 caracteres';
+          error = t('forms.validation.locationMinLength');
         }
         break;
       case 'address':
         if (!validateRequired(formData.address)) {
-          error = 'La dirección es requerida';
+          error = t('forms.validation.addressRequired');
         } else if (!validateMinLength(formData.address, 5)) {
-          error = 'La dirección debe tener al menos 5 caracteres';
+          error = t('forms.validation.addressMinLength');
         } else if (!validateNoSpecialSymbols(formData.address)) {
-          error = 'La dirección contiene caracteres no permitidos';
+          error = t('forms.validation.addressInvalidChars');
         }
         break;
       case 'province':
         if (!validateRequired(formData.province)) {
-          error = 'La provincia es requerida';
+          error = t('forms.validation.provinceRequired');
         }
         break;
       case 'district':
         if (!validateRequired(formData.district)) {
-          error = 'El cantón es requerido';
+          error = t('forms.validation.districtRequired');
         }
         break;
       case 'startDate':
         if (!validateRequired(formData.startDate)) {
-          error = 'La fecha de inicio es requerida';
+          error = t('forms.validation.startDateRequired');
         } else if (!validateFutureDate(new Date(formData.startDate))) {
-          error = 'La fecha debe ser futura';
+          error = t('forms.validation.startDateFuture');
         }
         break;
       case 'endDate':
         if (!validateRequired(formData.endDate)) {
-          error = 'La fecha de fin es requerida';
+          error = t('forms.validation.endDateRequired');
         } else if (!validateDateRange(new Date(formData.startDate), new Date(formData.endDate))) {
-          error = 'La fecha de fin debe ser posterior a la de inicio';
+          error = t('forms.validation.endDateAfterStart');
         }
         break;
       case 'maxCapacity':
         if (!validateRequired(formData.maxCapacity)) {
-          error = 'La capacidad máxima es requerida';
+          error = t('forms.validation.capacityRequired');
         } else if (!validatePositiveNumber(parseInt(formData.maxCapacity))) {
-          error = 'Ingrese un número válido mayor a 0';
+          error = t('forms.validation.capacityInvalid');
         }
         break;
       case 'productCategories':
         if (formData.productCategories.length === 0) {
-          error = 'Seleccione al menos una categoría';
+          error = t('forms.validation.categoriesRequired');
         }
         break;
       case 'requirements':
         if (!validateRequired(formData.requirements)) {
-          error = 'Los requisitos son requeridos';
+          error = t('forms.validation.requirementsRequired');
         } else if (!validateMinLength(formData.requirements, 5)) {
-          error = 'Los requisitos deben tener al menos 5 caracteres';
+          error = t('forms.validation.requirementsMinLength');
         }
         break;
     }
@@ -246,18 +249,18 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
   return (
     <form className="fair-form" onSubmit={handleSubmit} noValidate>
       <div className="form-header">
-        <h2 className="form-title">Crear Nueva Feria</h2>
+        <h2 className="form-title">{t('forms.fair.title')}</h2>
         <p className="form-description">
-          Complete la información para programar una nueva feria agroproductiva.
+          {t('forms.fair.formDescription')}
         </p>
       </div>
 
       <fieldset className="form-section">
-        <legend className="section-title">Información General</legend>
+        <legend className="section-title">{t('forms.fair.generalInfo')}</legend>
 
         <div className="form-group">
           <label htmlFor="name" className="form-label">
-            Nombre de la Feria <span className="required">*</span>
+            {t('forms.fair.name')} <span className="required">*</span>
           </label>
           <input
             type="text"
@@ -267,7 +270,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
             value={formData.name}
             onChange={handleInputChange}
             onBlur={() => handleBlur('name')}
-            placeholder="Ej: Feria Agroproductiva de Primavera"
+            placeholder={t('forms.fair.namePlaceholder')}
             aria-required="true"
           />
           {touched.name && errors.name && (
@@ -279,7 +282,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
 
         <div className="form-group">
           <label htmlFor="description" className="form-label">
-            Descripción <span className="required">*</span>
+            {t('forms.fair.description')} <span className="required">*</span>
           </label>
           <textarea
             id="description"
@@ -288,7 +291,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
             value={formData.description}
             onChange={handleInputChange}
             onBlur={() => handleBlur('description')}
-            placeholder="Describa el propósito y características de la feria..."
+            placeholder={t('forms.fair.descriptionPlaceholder')}
             rows={4}
             aria-required="true"
           />
@@ -302,7 +305,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="province" className="form-label">
-              Provincia <span className="required">*</span>
+              {t('forms.fair.province')} <span className="required">*</span>
             </label>
             <select
               id="province"
@@ -313,7 +316,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
               onBlur={() => handleBlur('province')}
               aria-required="true"
             >
-              <option value="">Seleccione una provincia...</option>
+              <option value="">{t('forms.producer.selectProvince')}</option>
               {PROVINCIAS_ECUADOR.map((prov) => (
                 <option key={prov} value={prov}>
                   {prov}
@@ -329,7 +332,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
 
           <div className="form-group">
             <label htmlFor="district" className="form-label">
-              Cantón <span className="required">*</span>
+              {t('forms.fair.district')} <span className="required">*</span>
             </label>
             <select
               id="district"
@@ -342,7 +345,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
               aria-required="true"
             >
               <option value="">
-                {formData.province ? 'Seleccione un cantón...' : 'Primero seleccione provincia'}
+                {formData.province ? t('forms.producer.selectDistrict') : t('forms.producer.selectProvince')}
               </option>
               {availableDistricts.map((dist) => (
                 <option key={dist} value={dist}>
@@ -361,7 +364,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="location" className="form-label">
-              Lugar Específico <span className="required">*</span>
+              {t('forms.fair.location')} <span className="required">*</span>
             </label>
             <input
               type="text"
@@ -371,7 +374,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
               value={formData.location}
               onChange={handleInputChange}
               onBlur={() => handleBlur('location')}
-              placeholder="Ej: Parque Central, Plaza de Mercado"
+              placeholder={t('forms.fair.locationPlaceholder')}
               aria-required="true"
             />
             {touched.location && errors.location && (
@@ -383,7 +386,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
 
           <div className="form-group">
             <label htmlFor="address" className="form-label">
-              Dirección Exacta <span className="required">*</span>
+              {t('forms.fair.address')} <span className="required">*</span>
             </label>
             <input
               type="text"
@@ -406,12 +409,12 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
       </fieldset>
 
       <fieldset className="form-section">
-        <legend className="section-title">Fechas y Capacidad</legend>
+        <legend className="section-title">{t('forms.fair.dateCapacity')}</legend>
 
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="startDate" className="form-label">
-              Fecha de Inicio <span className="required">*</span>
+              {t('forms.fair.startDate')} <span className="required">*</span>
             </label>
             <input
               type="datetime-local"
@@ -432,7 +435,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
 
           <div className="form-group">
             <label htmlFor="endDate" className="form-label">
-              Fecha de Fin <span className="required">*</span>
+              {t('forms.fair.endDate')} <span className="required">*</span>
             </label>
             <input
               type="datetime-local"
@@ -455,7 +458,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="maxCapacity" className="form-label">
-              Capacidad Máxima (stands) <span className="required">*</span>
+              {t('forms.fair.maxCapacity')} <span className="required">*</span>
             </label>
             <input
               type="number"
@@ -478,7 +481,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
 
           <div className="form-group">
             <label htmlFor="status" className="form-label">
-              Estado
+              {t('forms.fair.statusLabel')}
             </label>
             <select
               id="status"
@@ -487,21 +490,21 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
               value={formData.status}
               onChange={handleInputChange}
             >
-              <option value="scheduled">Programada</option>
-              <option value="in-progress">En Progreso</option>
-              <option value="completed">Completada</option>
-              <option value="cancelled">Cancelada</option>
+              <option value="scheduled">{t('forms.fair.scheduled')}</option>
+              <option value="in-progress">{t('forms.fair.inProgress')}</option>
+              <option value="completed">{t('forms.fair.completed')}</option>
+              <option value="cancelled">{t('forms.fair.cancelled')}</option>
             </select>
           </div>
         </div>
       </fieldset>
 
       <fieldset className="form-section">
-        <legend className="section-title">Categorías y Requisitos</legend>
+        <legend className="section-title">{t('forms.fair.categoriesRequirements')}</legend>
 
         <div className="form-group">
           <label className="form-label">
-            Categorías de Productos <span className="required">*</span>
+            {t('forms.fair.productCategories')} <span className="required">*</span>
           </label>
           <div className="checkbox-grid">
             {categories.map((category) => (
@@ -525,7 +528,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
 
         <div className="form-group">
           <label htmlFor="requirements" className="form-label">
-            Requisitos <span className="required">*</span>
+            {t('forms.fair.requirements')} <span className="required">*</span>
           </label>
           <textarea
             id="requirements"
@@ -534,7 +537,7 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
             value={formData.requirements}
             onChange={handleInputChange}
             onBlur={() => handleBlur('requirements')}
-            placeholder="Requisitos separados por comas: Certificado sanitario, RUC, etc."
+            placeholder={t('forms.fair.requirementsPlaceholder')}
             rows={3}
             aria-required="true"
           />
@@ -553,10 +556,10 @@ export default function FairForm({ onSubmit, onCancel }: FairFormProps) {
           onClick={onCancel}
           disabled={isSubmitting}
         >
-          Cancelar
+          {t('common.cancel')}
         </button>
         <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-          {isSubmitting ? 'Creando...' : 'Crear Feria'}
+          {isSubmitting ? t('common.loading') : t('common.save')}
         </button>
       </div>
     </form>

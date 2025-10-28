@@ -16,6 +16,7 @@
  */
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { FormEvent, ChangeEvent } from 'react';
 import type { Producer } from '../types';
 import { PROVINCIAS_ECUADOR, CANTONES_POR_PROVINCIA } from '../types';
@@ -38,6 +39,8 @@ interface ProducerFormProps {
 }
 
 export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) {
+  const { t } = useTranslation();
+  
   const [formData, setFormData] = useState({
     name: '',
     lastName: '',
@@ -60,16 +63,16 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
 
   // Tipos de productos disponibles
   const productTypes = [
-    'Frutas',
-    'Verduras',
-    'Hortalizas',
-    'Tubérculos',
-    'Granos',
-    'Lácteos',
-    'Carnes',
-    'Huevos',
-    'Miel',
-    'Artesanías',
+    t('categories.fruits'),
+    t('categories.vegetables'),
+    t('categories.greens'),
+    t('categories.tubers'),
+    t('categories.grains'),
+    t('categories.dairy'),
+    t('categories.meat'),
+    t('categories.eggs'),
+    t('categories.honey'),
+    t('categories.crafts'),
   ];
 
   // Cantones filtrados según la provincia seleccionada
@@ -129,79 +132,79 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
     switch (field) {
       case 'name':
         if (!validateRequired(formData.name)) {
-          error = 'El nombre es requerido';
+          error = t('forms.validation.nameRequired');
         } else if (!validateMinLength(formData.name, 2)) {
-          error = 'El nombre debe tener al menos 2 caracteres';
+          error = t('forms.validation.nameMinLength');
         } else if (!validateOnlyLetters(formData.name)) {
-          error = 'El nombre solo puede contener letras';
+          error = t('forms.validation.nameOnlyLetters');
         }
         break;
       case 'lastName':
         if (!validateRequired(formData.lastName)) {
-          error = 'El apellido es requerido';
+          error = t('forms.validation.lastNameRequired');
         } else if (!validateMinLength(formData.lastName, 2)) {
-          error = 'El apellido debe tener al menos 2 caracteres';
+          error = t('forms.validation.lastNameMinLength');
         } else if (!validateOnlyLetters(formData.lastName)) {
-          error = 'El apellido solo puede contener letras';
+          error = t('forms.validation.lastNameOnlyLetters');
         }
         break;
       case 'documentNumber':
         if (!validateRequired(formData.documentNumber)) {
-          error = 'El número de documento es requerido';
+          error = t('forms.validation.documentRequired');
         } else if (formData.documentType === 'DNI' && !validateDNI(formData.documentNumber)) {
-          error = 'DNI debe tener 8 dígitos';
+          error = t('forms.validation.dniInvalid');
         } else if (formData.documentType === 'RUC' && !validateRUC(formData.documentNumber)) {
-          error = 'RUC debe tener 11 dígitos';
+          error = t('forms.validation.rucInvalid');
         }
         break;
       case 'email':
         if (!validateRequired(formData.email)) {
-          error = 'El email es requerido';
+          error = t('forms.validation.emailRequired');
         } else if (!validateEmail(formData.email)) {
-          error = 'Email inválido';
+          error = t('forms.validation.emailInvalid');
         }
         break;
       case 'phone':
         if (!validateRequired(formData.phone)) {
-          error = 'El teléfono es requerido';
+          error = t('forms.validation.phoneRequired');
         } else if (!validatePhone(formData.phone)) {
-          error = 'Teléfono debe tener 9 dígitos';
+          error = t('forms.validation.phoneInvalid');
         }
         break;
       case 'address':
         if (!validateRequired(formData.address)) {
-          error = 'La dirección es requerida';
+          error = t('forms.validation.addressRequired');
         } else if (!validateMinLength(formData.address, 5)) {
-          error = 'La dirección debe tener al menos 5 caracteres';
+          error = t('forms.validation.addressMinLength');
         } else if (!validateNoSpecialSymbols(formData.address)) {
-          error = 'La dirección contiene caracteres no permitidos';
+          error = t('forms.validation.addressInvalidChars');
         }
         break;
       case 'district':
         if (!validateRequired(formData.district)) {
-          error = 'El cantón es requerido';
+          error = t('forms.validation.districtRequired');
         }
         break;
       case 'province':
         if (!validateRequired(formData.province)) {
-          error = 'La provincia es requerida';
+          error = t('forms.validation.provinceRequired');
         }
         break;
       case 'department':
         if (!validateRequired(formData.department)) {
-          error = 'El país es requerido';
+          error = t('forms.validation.departmentRequired');
         }
         break;
       case 'productType':
         if (formData.productType.length === 0) {
-          error = 'Seleccione al menos un tipo de producto';
+          error = t('forms.validation.productTypeRequired');
         }
         break;
       case 'farmSize':
         if (!validateRequired(formData.farmSize)) {
-          error = 'El tamaño del terreno es requerido';
+          error = t('forms.validation.farmSizeRequired');
         } else if (!validatePositiveNumber(parseFloat(formData.farmSize))) {
-          error = 'Ingrese un valor válido mayor a 0';
+          error = t('forms.validation.farmSizeInvalid');
         }
         break;
     }
@@ -275,20 +278,20 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
   return (
     <form className="producer-form" onSubmit={handleSubmit} noValidate>
       <div className="form-header">
-        <h2 className="form-title">Inscripción de Productor</h2>
+        <h2 className="form-title">{t('forms.producer.title')}</h2>
         <p className="form-description">
-          Complete todos los campos marcados con (*) para inscribirse como productor agrícola.
+          {t('forms.producer.description')}
         </p>
       </div>
 
       {/* Sección: Datos Personales */}
       <fieldset className="form-section">
-        <legend className="section-title">Datos Personales</legend>
+        <legend className="section-title">{t('forms.producer.personalData')}</legend>
 
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="name" className="form-label">
-              Nombre <span className="required">*</span>
+              {t('forms.producer.name')} <span className="required">*</span>
             </label>
             <input
               type="text"
@@ -311,7 +314,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
 
           <div className="form-group">
             <label htmlFor="lastName" className="form-label">
-              Apellido <span className="required">*</span>
+              {t('forms.producer.lastName')} <span className="required">*</span>
             </label>
             <input
               type="text"
@@ -336,7 +339,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="documentType" className="form-label">
-              Tipo de Documento <span className="required">*</span>
+              {t('forms.producer.documentType')} <span className="required">*</span>
             </label>
             <select
               id="documentType"
@@ -346,15 +349,15 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
               onChange={handleInputChange}
               aria-required="true"
             >
-              <option value="DNI">DNI</option>
-              <option value="RUC">RUC</option>
-              <option value="CE">Carné de Extranjería</option>
+              <option value="DNI">{t('forms.producer.dni')}</option>
+              <option value="RUC">{t('forms.producer.ruc')}</option>
+              <option value="CE">{t('forms.producer.ce')}</option>
             </select>
           </div>
 
           <div className="form-group">
             <label htmlFor="documentNumber" className="form-label">
-              Número de Documento <span className="required">*</span>
+              {t('forms.producer.documentNumber')} <span className="required">*</span>
             </label>
             <input
               type="text"
@@ -380,7 +383,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="email" className="form-label">
-              Correo Electrónico <span className="required">*</span>
+              {t('forms.producer.email')} <span className="required">*</span>
             </label>
             <input
               type="email"
@@ -404,7 +407,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
 
           <div className="form-group">
             <label htmlFor="phone" className="form-label">
-              Teléfono <span className="required">*</span>
+              {t('forms.producer.phone')} <span className="required">*</span>
             </label>
             <input
               type="tel"
@@ -430,11 +433,11 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
 
       {/* Sección: Ubicación */}
       <fieldset className="form-section">
-        <legend className="section-title">Ubicación</legend>
+        <legend className="section-title">{t('forms.producer.locationData')}</legend>
 
         <div className="form-group">
           <label htmlFor="address" className="form-label">
-            Dirección <span className="required">*</span>
+            {t('forms.producer.address')} <span className="required">*</span>
           </label>
           <input
             type="text"
@@ -459,7 +462,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="department" className="form-label">
-              País <span className="required">*</span>
+              {t('forms.producer.department')} <span className="required">*</span>
             </label>
             <select
               id="department"
@@ -472,7 +475,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
               aria-invalid={touched.department && !!errors.department}
               aria-describedby={errors.department ? 'department-error' : undefined}
             >
-              <option value="">Seleccione...</option>
+              <option value="">{t('forms.producer.selectProvince')}</option>
               <option value="Ecuador">Ecuador</option>
             </select>
             {touched.department && errors.department && (
@@ -484,7 +487,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
 
           <div className="form-group">
             <label htmlFor="province" className="form-label">
-              Provincia <span className="required">*</span>
+              {t('forms.producer.province')} <span className="required">*</span>
             </label>
             <select
               id="province"
@@ -497,7 +500,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
               aria-invalid={touched.province && !!errors.province}
               aria-describedby={errors.province ? 'province-error' : undefined}
             >
-              <option value="">Seleccione...</option>
+              <option value="">{t('forms.producer.selectProvince')}</option>
               {PROVINCIAS_ECUADOR.map((prov) => (
                 <option key={prov} value={prov}>
                   {prov}
@@ -513,7 +516,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
 
           <div className="form-group">
             <label htmlFor="district" className="form-label">
-              Cantón <span className="required">*</span>
+              {t('forms.producer.district')} <span className="required">*</span>
             </label>
             <select
               id="district"
@@ -528,7 +531,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
               aria-describedby={errors.district ? 'district-error' : undefined}
             >
               <option value="">
-                {formData.province ? 'Seleccione un cantón...' : 'Primero seleccione provincia'}
+                {formData.province ? t('forms.producer.selectDistrict') : t('forms.producer.selectProvince')}
               </option>
               {availableDistricts.map((dist) => (
                 <option key={dist} value={dist}>
@@ -547,13 +550,13 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
 
       {/* Sección: Información de Producción */}
       <fieldset className="form-section">
-        <legend className="section-title">Información de Producción</legend>
+        <legend className="section-title">{t('forms.producer.productionData')}</legend>
 
         <div className="form-group">
           <label className="form-label">
-            Tipos de Productos <span className="required">*</span>
+            {t('forms.producer.productType')} <span className="required">*</span>
           </label>
-          <div className="checkbox-grid" role="group" aria-label="Tipos de productos">
+          <div className="checkbox-grid" role="group" aria-label={t('forms.producer.productType')}>
             {productTypes.map((product) => (
               <label key={product} className="checkbox-label">
                 <input
@@ -575,7 +578,7 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
 
         <div className="form-group">
           <label htmlFor="farmSize" className="form-label">
-            Tamaño del Terreno (hectáreas) <span className="required">*</span>
+            {t('forms.producer.farmSize')} <span className="required">*</span>
           </label>
           <input
             type="number"
@@ -608,14 +611,14 @@ export default function ProducerForm({ onSubmit, onCancel }: ProducerFormProps) 
           onClick={onCancel}
           disabled={isSubmitting}
         >
-          Cancelar
+          {t('common.cancel')}
         </button>
         <button
           type="submit"
           className="btn btn-primary"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Enviando...' : 'Inscribir Productor'}
+          {isSubmitting ? t('common.loading') : t('common.save')}
         </button>
       </div>
     </form>

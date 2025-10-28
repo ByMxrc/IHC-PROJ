@@ -4,14 +4,22 @@
  */
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHomeContent } from '../context/HomeContentContext';
-import type { FeatureCard, BenefitCard } from '../types';
+import type { FeatureCard, BenefitCard, Language, HomeContent } from '../types';
 import './HomeEditor.css';
 
 export default function HomeEditor() {
-  const { content, updateContent, resetToDefault } = useHomeContent();
+  const { i18n } = useTranslation();
+  const currentLanguage = i18n.language as Language;
+  const { content, updateContent: updateContentOriginal, resetToDefault } = useHomeContent();
   const [activeTab, setActiveTab] = useState<'hero' | 'features' | 'benefits' | 'context' | 'mission'>('hero');
   const [showSuccess, setShowSuccess] = useState(false);
+  
+  // Wrapper para añadir el idioma automáticamente
+  const updateContent = (newContent: HomeContent) => {
+    updateContentOriginal(newContent, currentLanguage);
+  };
 
   const handleSave = () => {
     setShowSuccess(true);

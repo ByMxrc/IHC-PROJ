@@ -1,0 +1,407 @@
+/**
+ * Variables de Tema y Accesibilidad
+ * Incluye temas claro, oscuro y modos para daltónicos
+ */
+
+/* ============================================
+   TEMA CLARO (Light Mode)
+   ============================================ */
+.theme-light {
+  /* Colores primarios */
+  --primary-color: #4caf50;
+  --primary-dark: #388e3c;
+  --primary-light: #81c784;
+  --secondary-color: #2196f3;
+  --accent-color: #ff9800;
+  
+  /* Backgrounds */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #e8f5e9;
+  
+  /* Textos */
+  --text-primary: #212121;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  
+  /* Navegación */
+  --nav-bg: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+  --nav-secondary-bg: #f9f9f9;
+  --nav-border: #e0e0e0;
+  
+  /* Controles */
+  --control-bg: rgba(255, 255, 255, 0.9);
+  --control-border: rgba(255, 255, 255, 0.3);
+  --control-hover-bg: rgba(255, 255, 255, 1);
+  
+  /* Dropdown */
+  --dropdown-bg: #ffffff;
+  --dropdown-border: #e0e0e0;
+  --dropdown-hover: #f5f5f5;
+  
+  /* Botones */
+  --login-bg: #2196f3;
+  --login-hover-bg: #1976d2;
+  --logout-bg: #f44336;
+  --logout-hover-bg: #d32f2f;
+  
+  /* User Info */
+  --user-info-bg: rgba(255, 255, 255, 0.2);
+  
+  /* Toggle */
+  --toggle-bg: rgba(46, 125, 50, 0.1);
+  --toggle-border: rgba(46, 125, 50, 0.2);
+  --toggle-hover-bg: rgba(46, 125, 50, 0.15);
+  
+  /* Menu Items */
+  --menu-item-bg: #ffffff;
+  --menu-item-border: #e0e0e0;
+  --menu-item-hover-bg: #f5f5f5;
+  --menu-item-active-bg: #4caf50;
+  --menu-item-active-color: #ffffff;
+  --menu-item-active-border: #4caf50;
+  
+  /* Admin Items */
+  --admin-item-bg: rgba(156, 39, 176, 0.1);
+  --admin-item-border: rgba(156, 39, 176, 0.3);
+  --admin-item-hover-bg: rgba(156, 39, 176, 0.2);
+  --admin-item-active-bg: #9c27b0;
+  --admin-item-active-border: #9c27b0;
+  
+  /* Formularios e Inputs */
+  --input-bg: #ffffff;
+  --input-border: #ddd;
+  --input-border-hover: #bbb;
+  --input-border-focus: #4caf50;
+  --input-text: #212121;
+  --input-placeholder: #999999;
+  --input-error-bg: #ffebee;
+  --input-error-border: #d32f2f;
+  --label-text: #424242;
+  
+  /* Sombras */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   TEMA OSCURO (Dark Mode)
+   ============================================ */
+.theme-dark {
+  /* Colores primarios */
+  --primary-color: #66bb6a;
+  --primary-dark: #4caf50;
+  --primary-light: #81c784;
+  --secondary-color: #42a5f5;
+  --accent-color: #ffa726;
+  
+  /* Backgrounds */
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #2c2c2c;
+  
+  /* Textos */
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #808080;
+  
+  /* Navegación */
+  --nav-bg: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+  --nav-secondary-bg: #1e1e1e;
+  --nav-border: #333333;
+  
+  /* Controles */
+  --control-bg: rgba(255, 255, 255, 0.1);
+  --control-border: rgba(255, 255, 255, 0.2);
+  --control-hover-bg: rgba(255, 255, 255, 0.15);
+  
+  /* Dropdown */
+  --dropdown-bg: #2c2c2c;
+  --dropdown-border: #444444;
+  --dropdown-hover: #383838;
+  
+  /* Botones */
+  --login-bg: #1976d2;
+  --login-hover-bg: #1565c0;
+  --logout-bg: #c62828;
+  --logout-hover-bg: #b71c1c;
+  
+  /* User Info */
+  --user-info-bg: rgba(255, 255, 255, 0.1);
+  
+  /* Toggle */
+  --toggle-bg: rgba(102, 187, 106, 0.1);
+  --toggle-border: rgba(102, 187, 106, 0.2);
+  --toggle-hover-bg: rgba(102, 187, 106, 0.15);
+  
+  /* Menu Items */
+  --menu-item-bg: #2c2c2c;
+  --menu-item-border: #444444;
+  --menu-item-hover-bg: #383838;
+  --menu-item-active-bg: #66bb6a;
+  --menu-item-active-color: #121212;
+  --menu-item-active-border: #66bb6a;
+  
+  /* Admin Items */
+  --admin-item-bg: rgba(186, 104, 200, 0.1);
+  --admin-item-border: rgba(186, 104, 200, 0.3);
+  --admin-item-hover-bg: rgba(186, 104, 200, 0.2);
+  --admin-item-active-bg: #ba68c8;
+  --admin-item-active-border: #ba68c8;
+  
+  /* Formularios e Inputs */
+  --input-bg: #2c2c2c;
+  --input-border: #555555;
+  --input-border-hover: #777777;
+  --input-border-focus: #66bb6a;
+  --input-text: #ffffff;
+  --input-placeholder: #888888;
+  --input-error-bg: #3d1f1f;
+  --input-error-border: #ef5350;
+  --label-text: #e0e0e0;
+  
+  /* Sombras */
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --shadow-dark: rgba(0, 0, 0, 0.7);
+}
+
+/* ============================================
+   DEUTERANOPÍA (Dificultad con verde/rojo)
+   ============================================ */
+.theme-deuteranopia {
+  /* Colores primarios - Azul/Amarillo */
+  --primary-color: #2196f3;
+  --primary-dark: #1976d2;
+  --primary-light: #64b5f6;
+  --secondary-color: #ffc107;
+  --accent-color: #ff9800;
+  
+  /* Backgrounds */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #e3f2fd;
+  
+  /* Textos */
+  --text-primary: #212121;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  
+  /* Navegación */
+  --nav-bg: linear-gradient(135deg, #1565c0 0%, #2196f3 100%);
+  --nav-secondary-bg: #f9f9f9;
+  --nav-border: #e0e0e0;
+  
+  --control-bg: rgba(255, 255, 255, 0.9);
+  --control-border: rgba(255, 255, 255, 0.3);
+  --control-hover-bg: rgba(255, 255, 255, 1);
+  
+  --dropdown-bg: #ffffff;
+  --dropdown-border: #e0e0e0;
+  --dropdown-hover: #f5f5f5;
+  
+  --login-bg: #ffc107;
+  --login-hover-bg: #ffa000;
+  --logout-bg: #ff6f00;
+  --logout-hover-bg: #e65100;
+  
+  --user-info-bg: rgba(255, 255, 255, 0.2);
+  
+  --toggle-bg: rgba(33, 150, 243, 0.1);
+  --toggle-border: rgba(33, 150, 243, 0.2);
+  --toggle-hover-bg: rgba(33, 150, 243, 0.15);
+  
+  --menu-item-bg: #ffffff;
+  --menu-item-border: #e0e0e0;
+  --menu-item-hover-bg: #f5f5f5;
+  --menu-item-active-bg: #2196f3;
+  --menu-item-active-color: #ffffff;
+  --menu-item-active-border: #2196f3;
+  
+  --admin-item-bg: rgba(255, 193, 7, 0.1);
+  --admin-item-border: rgba(255, 193, 7, 0.3);
+  --admin-item-hover-bg: rgba(255, 193, 7, 0.2);
+  --admin-item-active-bg: #ffc107;
+  --admin-item-active-border: #ffc107;
+  
+  /* Formularios e Inputs */
+  --input-bg: #ffffff;
+  --input-border: #ddd;
+  --input-border-hover: #bbb;
+  --input-border-focus: #2196f3;
+  --input-text: #212121;
+  --input-placeholder: #999999;
+  --input-error-bg: #fff3e0;
+  --input-error-border: #ff6f00;
+  --label-text: #424242;
+  
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   PROTANOPÍA (Dificultad con rojo)
+   ============================================ */
+.theme-protanopia {
+  /* Colores primarios - Azul/Amarillo oscuro */
+  --primary-color: #0288d1;
+  --primary-dark: #01579b;
+  --primary-light: #4fc3f7;
+  --secondary-color: #f9a825;
+  --accent-color: #ff6f00;
+  
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #e1f5fe;
+  
+  --text-primary: #212121;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  
+  --nav-bg: linear-gradient(135deg, #01579b 0%, #0288d1 100%);
+  --nav-secondary-bg: #f9f9f9;
+  --nav-border: #e0e0e0;
+  
+  --control-bg: rgba(255, 255, 255, 0.9);
+  --control-border: rgba(255, 255, 255, 0.3);
+  --control-hover-bg: rgba(255, 255, 255, 1);
+  
+  --dropdown-bg: #ffffff;
+  --dropdown-border: #e0e0e0;
+  --dropdown-hover: #f5f5f5;
+  
+  --login-bg: #f9a825;
+  --login-hover-bg: #f57f17;
+  --logout-bg: #ff8f00;
+  --logout-hover-bg: #ff6f00;
+  
+  --user-info-bg: rgba(255, 255, 255, 0.2);
+  
+  --toggle-bg: rgba(2, 136, 209, 0.1);
+  --toggle-border: rgba(2, 136, 209, 0.2);
+  --toggle-hover-bg: rgba(2, 136, 209, 0.15);
+  
+  --menu-item-bg: #ffffff;
+  --menu-item-border: #e0e0e0;
+  --menu-item-hover-bg: #f5f5f5;
+  --menu-item-active-bg: #0288d1;
+  --menu-item-active-color: #ffffff;
+  --menu-item-active-border: #0288d1;
+  
+  --admin-item-bg: rgba(249, 168, 37, 0.1);
+  --admin-item-border: rgba(249, 168, 37, 0.3);
+  --admin-item-hover-bg: rgba(249, 168, 37, 0.2);
+  --admin-item-active-bg: #f9a825;
+  --admin-item-active-border: #f9a825;
+  
+  /* Formularios e Inputs */
+  --input-bg: #ffffff;
+  --input-border: #ddd;
+  --input-border-hover: #bbb;
+  --input-border-focus: #0288d1;
+  --input-text: #212121;
+  --input-placeholder: #999999;
+  --input-error-bg: #fff3e0;
+  --input-error-border: #ff8f00;
+  --label-text: #424242;
+  
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   TRITANOPÍA (Dificultad con azul/amarillo)
+   ============================================ */
+.theme-tritanopia {
+  /* Colores primarios - Rosa/Turquesa */
+  --primary-color: #00acc1;
+  --primary-dark: #00838f;
+  --primary-light: #4dd0e1;
+  --secondary-color: #ec407a;
+  --accent-color: #d81b60;
+  
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #e0f7fa;
+  
+  --text-primary: #212121;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  
+  --nav-bg: linear-gradient(135deg, #00838f 0%, #00acc1 100%);
+  --nav-secondary-bg: #f9f9f9;
+  --nav-border: #e0e0e0;
+  
+  --control-bg: rgba(255, 255, 255, 0.9);
+  --control-border: rgba(255, 255, 255, 0.3);
+  --control-hover-bg: rgba(255, 255, 255, 1);
+  
+  --dropdown-bg: #ffffff;
+  --dropdown-border: #e0e0e0;
+  --dropdown-hover: #f5f5f5;
+  
+  --login-bg: #ec407a;
+  --login-hover-bg: #d81b60;
+  --logout-bg: #c2185b;
+  --logout-hover-bg: #ad1457;
+  
+  --user-info-bg: rgba(255, 255, 255, 0.2);
+  
+  --toggle-bg: rgba(0, 172, 193, 0.1);
+  --toggle-border: rgba(0, 172, 193, 0.2);
+  --toggle-hover-bg: rgba(0, 172, 193, 0.15);
+  
+  --menu-item-bg: #ffffff;
+  --menu-item-border: #e0e0e0;
+  --menu-item-hover-bg: #f5f5f5;
+  --menu-item-active-bg: #00acc1;
+  --menu-item-active-color: #ffffff;
+  --menu-item-active-border: #00acc1;
+  
+  --admin-item-bg: rgba(236, 64, 122, 0.1);
+  --admin-item-border: rgba(236, 64, 122, 0.3);
+  --admin-item-hover-bg: rgba(236, 64, 122, 0.2);
+  --admin-item-active-bg: #ec407a;
+  --admin-item-active-border: #ec407a;
+  
+  /* Formularios e Inputs */
+  --input-bg: #ffffff;
+  --input-border: #ddd;
+  --input-border-hover: #bbb;
+  --input-border-focus: #00acc1;
+  --input-text: #212121;
+  --input-placeholder: #999999;
+  --input-error-bg: #fce4ec;
+  --input-error-border: #c2185b;
+  --label-text: #424242;
+  
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   ESTILOS GLOBALES
+   ============================================ */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}

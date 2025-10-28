@@ -7,6 +7,7 @@
 import { useState, useEffect } from 'react';
 import type { FormEvent, ChangeEvent } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import { validateRequired, validateMinLength } from '../utils/validation';
 import './LoginModal.css';
 
@@ -17,6 +18,7 @@ interface LoginModalProps {
 
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const { login } = useAuth();
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -174,12 +176,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         <div className="modal-header">
           <h2 id="login-modal-title" className="modal-title">
             <span className="modal-icon">🔐</span>
-            Iniciar Sesión
+            {t('login.title')}
           </h2>
           <button 
             className="modal-close" 
             onClick={onClose}
-            aria-label="Cerrar modal de login"
+            aria-label={t('common.close')}
             type="button"
           >
             ✕
@@ -196,7 +198,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
           <div className="form-group">
             <label htmlFor="username" className="form-label">
-              Usuario *
+              {t('login.username')} *
             </label>
             <input
               type="text"
@@ -206,7 +208,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
               onChange={handleInputChange}
               onBlur={() => handleBlur('username')}
               className={`form-input ${touched.username && errors.username ? 'error' : ''}`}
-              placeholder="Ingrese su usuario"
+              placeholder={t('login.username')}
               required
               aria-required="true"
               aria-invalid={touched.username && errors.username ? 'true' : 'false'}
@@ -221,7 +223,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
           <div className="form-group">
             <label htmlFor="password" className="form-label">
-              Contraseña *
+              {t('login.password')} *
             </label>
             <input
               type="password"
@@ -231,7 +233,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
               onChange={handleInputChange}
               onBlur={() => handleBlur('password')}
               className={`form-input ${touched.password && errors.password ? 'error' : ''}`}
-              placeholder="Ingrese su contraseña"
+              placeholder={t('login.password')}
               required
               aria-required="true"
               aria-invalid={touched.password && errors.password ? 'true' : 'false'}
@@ -249,16 +251,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             className="btn-login-modal"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+            {isSubmitting ? '...' : t('login.submit')}
           </button>
-
-          <div className="login-info">
-            <span className="info-icon">ℹ️</span>
-            <div className="info-content">
-              <strong>Credenciales de prueba:</strong>
-              Usuario: <code>admin</code> | Contraseña: <code>admin123</code>
-            </div>
-          </div>
         </form>
       </div>
     </div>
