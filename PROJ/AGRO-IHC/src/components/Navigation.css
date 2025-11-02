@@ -201,6 +201,17 @@
   text-transform: capitalize;
 }
 
+.btn-profile-top {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-profile-top:hover {
+  background: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
 .btn-logout-top {
   background: var(--logout-bg);
   color: white;

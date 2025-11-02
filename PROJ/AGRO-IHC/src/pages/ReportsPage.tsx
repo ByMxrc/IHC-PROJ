@@ -3,6 +3,7 @@
  */
 
 import { useTranslation } from 'react-i18next';
+import HelpButton from '../components/HelpButton';
 import './ReportsPage.css';
 
 export default function ReportsPage() {
@@ -32,6 +33,8 @@ export default function ReportsPage() {
           <li>Tendencias de comercialización</li>
         </ul>
       </div>
+
+      <HelpButton pageKey="reports" />
     </div>
   );
 }

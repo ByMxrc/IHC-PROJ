@@ -92,7 +92,10 @@ export interface User {
   id: string;
   username: string;
   name: string;
-  role: 'admin' | 'user';
+  role: 'admin' | 'coordinator' | 'producer' | 'user';
+  email?: string;
+  fullName?: string;
+  phone?: string;
 }
 
 export interface AuthState {
@@ -109,7 +112,10 @@ export type MenuOption =
   | 'transport' 
   | 'sales' 
   | 'reports'
-  | 'edit-home';
+  | 'profile'
+  | 'user-registration'
+  | 'edit-home'
+  | 'translations';
 
 // CONTEXTO: Provincias del Ecuador
 export const PROVINCIAS_ECUADOR = [

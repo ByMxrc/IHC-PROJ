@@ -3,6 +3,7 @@
  */
 
 import { useTranslation } from 'react-i18next';
+import HelpButton from '../components/HelpButton';
 import './SalesPage.css';
 
 export default function SalesPage() {
@@ -26,6 +27,8 @@ export default function SalesPage() {
           El módulo de comercialización permitirá registrar y analizar las ventas realizadas en cada feria.
         </p>
       </div>
+
+      <HelpButton pageKey="sales" />
     </div>
   );
 }

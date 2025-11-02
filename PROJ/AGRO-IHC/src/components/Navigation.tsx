@@ -10,8 +10,10 @@ import type { MenuOption } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { useAccessibility } from '../context/AccessibilityContext';
 import { useTranslation } from 'react-i18next';
-import type { ThemeMode, Language } from '../types';
+import type { ThemeMode } from '../types';
 import LoginModal from './LoginModal';
+import NotificationBell from './NotificationBell';
+import LanguageSelector from './LanguageSelector';
 import logo from '../img/logo.png';
 import './Navigation.css';
 
@@ -24,10 +26,9 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
-  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   
   const { user, logout, isAuthenticated } = useAuth();
-  const { theme, language, setTheme, setLanguage } = useAccessibility();
+  const { theme, setTheme } = useAccessibility();
   const { t } = useTranslation();
 
   const menuItems: { key: MenuOption; labelKey: string; icon: string }[] = [
@@ -42,6 +43,8 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
 
   const adminMenuItems: { key: MenuOption; labelKey: string; icon: string }[] = [
     { key: 'edit-home', labelKey: 'nav.editHome', icon: '✏️' },
+    { key: 'translations', labelKey: 'nav.translations', icon: '🌍' },
+    { key: 'user-registration', labelKey: 'nav.userRegistration', icon: '👥' },
   ];
 
   const themeOptions: { value: ThemeMode; labelKey: string; icon: string }[] = [
@@ -50,11 +53,6 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
     { value: 'deuteranopia', labelKey: 'accessibility.deuteranopia', icon: '🟢' },
     { value: 'protanopia', labelKey: 'accessibility.protanopia', icon: '🔴' },
     { value: 'tritanopia', labelKey: 'accessibility.tritanopia', icon: '🔵' },
-  ];
-
-  const languageOptions: { value: Language; label: string; flag: string }[] = [
-    { value: 'es', label: 'Español', flag: '🇪🇸' },
-    { value: 'en', label: 'English', flag: '🇺🇸' },
   ];
 
   const handleNavigation = (page: MenuOption) => {
@@ -87,11 +85,6 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
     setShowThemeMenu(false);
   };
 
-  const handleLanguageChange = (newLanguage: Language) => {
-    setLanguage(newLanguage);
-    setShowLanguageMenu(false);
-  };
-
   return (
     <>
       {/* Top Bar Compacta */}
@@ -105,6 +98,9 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
 
           {/* Controles de Accesibilidad */}
           <div className="top-bar-controls">
+            {/* Notificaciones (solo si está autenticado) */}
+            {isAuthenticated && <NotificationBell />}
+
             {/* Selector de Tema */}
             <div className="control-dropdown">
               <button
@@ -138,28 +134,7 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
             </div>
 
             {/* Selector de Idioma */}
-            <div className="control-dropdown">
-              <button
-                className="control-btn"
-                onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                title={t('accessibility.language')}
-              >
-                <span className="control-label">{language === 'es' ? 'ES' : 'US'}</span>
-              </button>
-              {showLanguageMenu && (
-                <div className="dropdown-menu">
-                  {languageOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      className={`dropdown-item ${language === option.value ? 'active' : ''}`}
-                      onClick={() => handleLanguageChange(option.value)}
-                    >
-                      <span>{option.label}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <LanguageSelector />
 
             {/* Botón de Login / Usuario */}
             {!isAuthenticated ? (
@@ -173,6 +148,10 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
                   <span className="user-icon">👤</span>
                   <span className="user-name">{user?.username}</span>
                 </div>
+                <button className="btn-profile-top" onClick={() => handleNavigation('profile')}>
+                  <span className="btn-icon">⚙️</span>
+                  <span className="btn-label">Perfil</span>
+                </button>
                 <button className="btn-logout-top" onClick={handleLogout}>
                   <span className="btn-icon">🚪</span>
                   <span className="btn-label">{t('nav.logout')}</span>

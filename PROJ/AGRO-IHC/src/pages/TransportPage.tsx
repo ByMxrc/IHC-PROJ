@@ -3,6 +3,7 @@
  */
 
 import { useTranslation } from 'react-i18next';
+import HelpButton from '../components/HelpButton';
 import './TransportPage.css';
 
 export default function TransportPage() {
@@ -32,6 +33,8 @@ export default function TransportPage() {
           <li>Costos de transporte</li>
         </ul>
       </div>
+
+      <HelpButton pageKey="transport" />
     </div>
   );
 }

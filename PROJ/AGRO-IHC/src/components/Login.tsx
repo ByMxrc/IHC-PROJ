@@ -23,6 +23,7 @@ export default function Login() {
     username: '',
     password: '',
   });
+  const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -83,7 +84,7 @@ export default function Login() {
     return usernameValid && passwordValid;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setLoginError('');
@@ -92,14 +93,19 @@ export default function Login() {
     setTouched({ username: true, password: true });
 
     if (validateForm()) {
-      // Intentar login
-      const success = login(formData.username, formData.password);
-      
-      if (!success) {
-        setLoginError('Usuario o contraseña incorrectos');
+      try {
+        // Intentar login
+        const result = await login(formData.username, formData.password, rememberMe);
+        
+        if (!result.success) {
+          setLoginError(result.message || 'Usuario o contraseña incorrectos');
+          setIsSubmitting(false);
+        }
+        // Si es exitoso, el contexto se encargará de la redirección
+      } catch (error: any) {
+        setLoginError(error.message || 'Error de conexión con el servidor');
         setIsSubmitting(false);
       }
-      // Si es exitoso, el AuthContext manejará el cambio de estado
     } else {
       setIsSubmitting(false);
     }
@@ -170,6 +176,18 @@ export default function Login() {
                 {errors.password}
               </span>
             )}
+          </div>
+
+          <div className="form-group-checkbox">
+            <label className="checkbox-label-inline">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="checkbox-input"
+              />
+              <span className="checkbox-text">Recordar mi sesión por 30 días</span>
+            </label>
           </div>
 
           <button

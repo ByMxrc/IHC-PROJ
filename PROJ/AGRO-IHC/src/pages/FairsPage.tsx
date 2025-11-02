@@ -6,6 +6,7 @@ import { useState } from 'react';
 import type { Fair } from '../types';
 import { useTranslation } from 'react-i18next';
 import FairForm from '../components/FairForm';
+import HelpButton from '../components/HelpButton';
 import './FairsPage.css';
 
 export default function FairsPage() {
@@ -99,6 +100,8 @@ export default function FairsPage() {
           ))}
         </div>
       )}
+
+      <HelpButton pageKey="fairs" />
     </div>
   );
 }

@@ -9,6 +9,7 @@ import type { FormEvent, ChangeEvent } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { validateRequired, validateMinLength } from '../utils/validation';
+import PasswordRecovery from './PasswordRecovery';
 import './LoginModal.css';
 
 interface LoginModalProps {
@@ -23,6 +24,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     username: '',
     password: '',
   });
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showPasswordRecovery, setShowPasswordRecovery] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -150,15 +153,15 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     setIsSubmitting(true);
 
     try {
-      const success = login(formData.username, formData.password);
+      const result = await login(formData.username, formData.password, rememberMe);
       
-      if (success) {
+      if (result.success) {
         onClose(); // Cerrar modal al iniciar sesión exitosamente
       } else {
-        setLoginError('Usuario o contraseña incorrectos');
+        setLoginError(result.message || 'Usuario o contraseña incorrectos');
       }
-    } catch (error) {
-      setLoginError('Error al iniciar sesión. Intente nuevamente.');
+    } catch (error: any) {
+      setLoginError(error.message || 'Error de conexión con el servidor');
     } finally {
       setIsSubmitting(false);
     }
@@ -246,6 +249,18 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             )}
           </div>
 
+          <div className="form-group-checkbox">
+            <label className="checkbox-label-inline">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="checkbox-input"
+              />
+              <span className="checkbox-text">Recordar mi sesión por 30 días</span>
+            </label>
+          </div>
+
           <button 
             type="submit" 
             className="btn-login-modal"
@@ -253,8 +268,22 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           >
             {isSubmitting ? '...' : t('login.submit')}
           </button>
+
+          <div className="login-footer-links">
+            <button 
+              type="button"
+              onClick={() => setShowPasswordRecovery(true)} 
+              className="link-button"
+            >
+              ¿Olvidaste tu contraseña?
+            </button>
+          </div>
         </form>
       </div>
+
+      {showPasswordRecovery && (
+        <PasswordRecovery onClose={() => setShowPasswordRecovery(false)} />
+      )}
     </div>
   );
 }

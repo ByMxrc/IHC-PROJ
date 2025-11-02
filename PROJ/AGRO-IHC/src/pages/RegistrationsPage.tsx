@@ -5,6 +5,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import FairRegistrationForm from '../components/FairRegistrationForm';
+import HelpButton from '../components/HelpButton';
 import './RegistrationsPage.css';
 
 export default function RegistrationsPage() {
@@ -64,6 +65,8 @@ export default function RegistrationsPage() {
           <p>Haga clic en "Nueva Inscripción" para comenzar</p>
         </div>
       )}
+
+      <HelpButton pageKey="registrations" />
     </div>
   );
 }

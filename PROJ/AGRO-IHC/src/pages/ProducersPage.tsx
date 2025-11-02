@@ -6,6 +6,7 @@ import { useState } from 'react';
 import type { Producer } from '../types';
 import { useTranslation } from 'react-i18next';
 import ProducerForm from '../components/ProducerForm';
+import HelpButton from '../components/HelpButton';
 import './ProducersPage.css';
 
 export default function ProducersPage() {
@@ -155,6 +156,8 @@ export default function ProducersPage() {
           </div>
         </div>
       )}
+
+      <HelpButton pageKey="producers" />
     </div>
   );
 }

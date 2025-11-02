@@ -11,12 +11,14 @@
  * Normas: ISO 9241-11 (Usabilidad) e ISO 9241-210 (Diseño centrado en el usuario)
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { MenuOption } from './types';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { HomeContentProvider } from './context/HomeContentContext';
 import { AccessibilityProvider } from './context/AccessibilityContext';
+import { NotificationProvider } from './context/NotificationContext';
 import Navigation from './components/Navigation';
+import TermsModal from './components/TermsModal';
 import HomePage from './pages/HomePage';
 import ProducersPage from './pages/ProducersPage';
 import FairsPage from './pages/FairsPage';
@@ -24,11 +26,39 @@ import RegistrationsPage from './pages/RegistrationsPage';
 import TransportPage from './pages/TransportPage';
 import SalesPage from './pages/SalesPage';
 import ReportsPage from './pages/ReportsPage';
+import ProfilePage from './pages/ProfilePage';
+import UserRegistration from './components/UserRegistration';
 import HomeEditor from './components/HomeEditor';
+import TranslationsPanel from './components/TranslationsPanel';
 import './App.css';
 
 function AppContent() {
+  const { isAuthenticated, logout } = useAuth();
   const [currentPage, setCurrentPage] = useState<MenuOption>('home');
+  const [showTermsModal, setShowTermsModal] = useState(false);
+
+  // Verificar si el usuario ya aceptó los términos
+  useEffect(() => {
+    if (isAuthenticated) {
+      const termsAccepted = localStorage.getItem('termsAccepted');
+      if (!termsAccepted) {
+        setShowTermsModal(true);
+      }
+    }
+  }, [isAuthenticated]);
+
+  const handleAcceptTerms = () => {
+    localStorage.setItem('termsAccepted', 'true');
+    localStorage.setItem('termsAcceptedDate', new Date().toISOString());
+    setShowTermsModal(false);
+  };
+
+  const handleDeclineTerms = () => {
+    // Si rechaza los términos, hacer logout
+    logout();
+    setShowTermsModal(false);
+    alert('Debe aceptar los términos para usar el sistema');
+  };
 
   const renderPage = () => {
     switch (currentPage) {
@@ -46,8 +76,14 @@ function AppContent() {
         return <SalesPage />;
       case 'reports':
         return <ReportsPage />;
+      case 'profile':
+        return <ProfilePage />;
+      case 'user-registration':
+        return <UserRegistration />;
       case 'edit-home':
         return <HomeEditor />;
+      case 'translations':
+        return <TranslationsPanel />;
       default:
         return <HomePage />;
     }
@@ -59,6 +95,14 @@ function AppContent() {
       <main className="main-content">
         {renderPage()}
       </main>
+
+      {/* Modal de Términos y Condiciones */}
+      <TermsModal 
+        isOpen={showTermsModal}
+        onAccept={handleAcceptTerms}
+        onDecline={handleDeclineTerms}
+      />
+
       <footer className="app-footer">
         <div className="footer-content">
           <p>
@@ -77,9 +121,11 @@ function App() {
   return (
     <AccessibilityProvider>
       <AuthProvider>
-        <HomeContentProvider>
-          <AppContent />
-        </HomeContentProvider>
+        <NotificationProvider>
+          <HomeContentProvider>
+            <AppContent />
+          </HomeContentProvider>
+        </NotificationProvider>
       </AuthProvider>
     </AccessibilityProvider>
   );

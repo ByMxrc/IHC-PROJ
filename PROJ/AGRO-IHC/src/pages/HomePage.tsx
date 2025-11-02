@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import { useHomeContent } from '../context/HomeContentContext';
 import { useTranslation } from 'react-i18next';
 import logo from '../img/logo.png';
+import HelpButton from '../components/HelpButton';
 import './HomePage.css';
 
 export default function HomePage() {
@@ -90,6 +91,8 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+
+      <HelpButton pageKey="home" />
     </div>
   );
 }
