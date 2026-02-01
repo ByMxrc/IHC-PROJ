@@ -11,12 +11,8 @@ const multer = require('multer');
 const path = require('path');
 
 // Configuración de multer
-const storage = multer.diskStorage({
-  destination: './uploads/incidents/',
-  filename: (req, file, cb) => {
-    cb(null, `incident-${Date.now()}${path.extname(file.originalname)}`);
-  }
-});
+// Usar memoryStorage para compatibilidad con Vercel (read-only file system)
+const storage = multer.memoryStorage();
 
 const upload = multer({ 
   storage,

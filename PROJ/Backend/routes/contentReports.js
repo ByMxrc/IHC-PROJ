@@ -11,12 +11,8 @@ const multer = require('multer');
 const path = require('path');
 
 // Configuración de multer para subir imágenes
-const storage = multer.diskStorage({
-  destination: './uploads/reports/',
-  filename: (req, file, cb) => {
-    cb(null, `report-${Date.now()}${path.extname(file.originalname)}`);
-  }
-});
+// Usar memoryStorage para compatibilidad con Vercel (read-only file system)
+const storage = multer.memoryStorage();
 
 const upload = multer({ 
   storage,
