@@ -148,7 +148,7 @@ export default function RegistrationsPage() {
                     <td>{reg.id}</td>
                     <td>{reg.producerName || '-'}</td>
                     <td>{reg.fairName || '-'}</td>
-                    <td>{Array.isArray(reg.productsToSell) ? reg.productsToSell.join(', ') : (reg.products_to_sell ? (Array.isArray(reg.products_to_sell) ? reg.products_to_sell.join(', ') : '-') : '-')}</td>
+                    <td>{reg.notes || '-'}</td>
                     <td>{reg.estimatedQuantity || reg.estimated_quantity || '-'}</td>
                     <td>
                       <span className={`status-badge status-${reg.status}`}>
