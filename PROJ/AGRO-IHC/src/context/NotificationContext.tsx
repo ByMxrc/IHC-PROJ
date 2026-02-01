@@ -93,7 +93,9 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         },
         body: JSON.stringify({
           userId: user.id,
-          ...notification
+          title: notification.title,
+          message: notification.message,
+          type: notification.type
         })
       });
 

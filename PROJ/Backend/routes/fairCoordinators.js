@@ -57,14 +57,13 @@ router.post('/', authenticateToken, requireRole('admin'), async (req, res) => {
     // Crear notificación para el coordinador
     const fairName = fairData.rows[0]?.name || `Feria ${fairId}`;
     await query(`
-      INSERT INTO notifications (user_id, title, message, type, category, created_at)
-      VALUES ($1, $2, $3, $4, $5, NOW())
+      INSERT INTO notifications (user_id, title, message, type, created_at)
+      VALUES ($1, $2, $3, $4, NOW())
     `, [
       coordinatorId,
       'Nueva Asignación de Coordinación',
       `Has sido asignado como coordinador a la feria: ${fairName}`,
-      'info',
-      'fair'
+      'info'
     ]);
     
     res.status(201).json(result.rows[0]);
