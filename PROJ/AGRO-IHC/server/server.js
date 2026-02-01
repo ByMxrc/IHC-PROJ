@@ -14,12 +14,22 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Configurar CORS dinámicamente
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:3001',
+  'https://ihc-proj-weld.vercel.app'
+];
+
+// Si existe CORS_ORIGIN en variables de entorno, agregarlo
+if (process.env.CORS_ORIGIN) {
+  allowedOrigins.push(process.env.CORS_ORIGIN);
+}
+
 // Middlewares
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:5174'
-  ],
+  origin: allowedOrigins,
   credentials: true
 }));
 app.use(express.json());
