@@ -28,7 +28,7 @@ export default function RegistrationsPage() {
     try {
       setLoading(true);
       
-      // Cargar productores
+      // Cargar productores para el formulario
       const prodResponse = await fetch(`${API_BASE_URL}/producers`);
       if (prodResponse.ok) {
         const prodResult = await prodResponse.json();
@@ -40,7 +40,7 @@ export default function RegistrationsPage() {
         })));
       }
       
-      // Cargar ferias
+      // Cargar ferias para el formulario
       const fairResponse = await fetch(`${API_BASE_URL}/fairs`);
       if (fairResponse.ok) {
         const fairResult = await fairResponse.json();
@@ -54,7 +54,7 @@ export default function RegistrationsPage() {
         })));
       }
 
-      // Cargar inscripciones
+      // Cargar inscripciones (ya incluyen nombres de productor y feria)
       const regResponse = await fetch(`${API_BASE_URL}/registrations`);
       if (regResponse.ok) {
         const regResult = await regResponse.json();
@@ -143,27 +143,23 @@ export default function RegistrationsPage() {
                 </tr>
               </thead>
               <tbody>
-                {registrations.map((reg: any) => {
-                  const producer = producers.find(p => p.id === reg.producer_id?.toString());
-                  const fair = fairs.find(f => f.id === reg.fair_id?.toString());
-                  return (
-                    <tr key={reg.registration_id}>
-                      <td>{reg.registration_id}</td>
-                      <td>{producer ? `${producer.name} ${producer.lastName}` : `ID: ${reg.producer_id}`}</td>
-                      <td>{fair ? fair.name : `ID: ${reg.fair_id}`}</td>
-                      <td>{Array.isArray(reg.products_to_sell) ? reg.products_to_sell.join(', ') : '-'}</td>
-                      <td>{reg.estimated_quantity || '-'}</td>
-                      <td>
-                        <span className={`status-badge status-${reg.status}`}>
-                          {reg.status === 'approved' ? '✅ Aprobado' : 
-                           reg.status === 'pending' ? '⏳ Pendiente' : 
-                           reg.status === 'rejected' ? '❌ Rechazado' : reg.status}
-                        </span>
-                      </td>
-                      <td>{new Date(reg.registration_date).toLocaleDateString()}</td>
-                    </tr>
-                  );
-                })}
+                {registrations.map((reg: any) => (
+                  <tr key={reg.id}>
+                    <td>{reg.id}</td>
+                    <td>{reg.producerName || '-'}</td>
+                    <td>{reg.fairName || '-'}</td>
+                    <td>{Array.isArray(reg.productsToSell) ? reg.productsToSell.join(', ') : (reg.products_to_sell ? (Array.isArray(reg.products_to_sell) ? reg.products_to_sell.join(', ') : '-') : '-')}</td>
+                    <td>{reg.estimatedQuantity || reg.estimated_quantity || '-'}</td>
+                    <td>
+                      <span className={`status-badge status-${reg.status}`}>
+                        {reg.status === 'approved' ? '✅ Aprobado' : 
+                         reg.status === 'pending' ? '⏳ Pendiente' : 
+                         reg.status === 'rejected' ? '❌ Rechazado' : reg.status}
+                      </span>
+                    </td>
+                    <td>{new Date(reg.registrationDate || reg.registration_date).toLocaleDateString()}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
