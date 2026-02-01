@@ -68,7 +68,7 @@ router.put('/:id/read', async (req, res) => {
 
     const result = await query(`
       UPDATE notifications
-      SET is_read = true, read_at = NOW()
+      SET is_read = true
       WHERE notification_id = $1
       RETURNING *
     `, [id]);
@@ -87,7 +87,7 @@ router.patch('/:id/read', async (req, res) => {
 
     const result = await query(`
       UPDATE notifications
-      SET is_read = true, read_at = NOW()
+      SET is_read = true
       WHERE notification_id = $1
       RETURNING *
     `, [id]);
@@ -104,7 +104,7 @@ router.patch('/read-all', async (req, res) => {
   try {
     const result = await query(`
       UPDATE notifications
-      SET is_read = true, read_at = NOW()
+      SET is_read = true
       WHERE is_read = false
       RETURNING *
     `);
