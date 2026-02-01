@@ -32,7 +32,7 @@ router.post('/', authenticateToken, requireRole('admin'), async (req, res) => {
     
     // Verificar si ya existe una asignación
     const existing = await query(
-      'SELECT id FROM fair_coordinators WHERE fair_id = $1 AND coordinator_id = $2',
+      'SELECT coordinator_id FROM fair_coordinators WHERE fair_id = $1 AND coordinator_id = $2',
       [fairId, coordinatorId]
     );
     
@@ -112,17 +112,17 @@ router.get('/fair/:fairId', authenticateToken, async (req, res) => {
   try {
     const result = await query(`
       SELECT 
-        fc.*,
+        fc.coordinator_id,
+        fc.fair_id,
+        fc.assigned_date,
         u.username,
         u.email,
         u.full_name,
-        u.phone,
-        a.username as assigned_by_name
+        u.phone
       FROM fair_coordinators fc
       JOIN users u ON fc.coordinator_id = u.user_id
-      LEFT JOIN users a ON fc.assigned_by = a.user_id
       WHERE fc.fair_id = $1
-      ORDER BY fc.created_at DESC
+      ORDER BY fc.assigned_date DESC
     `, [fairId]);
     
     res.json(result.rows);
@@ -145,7 +145,9 @@ router.get('/coordinator/:coordinatorId', authenticateToken, async (req, res) =>
   try {
     const result = await query(`
       SELECT 
-        fc.*,
+        fc.coordinator_id,
+        fc.fair_id,
+        fc.assigned_date,
         f.name as fair_name,
         f.location,
         f.start_date,
@@ -170,7 +172,9 @@ router.get('/my-fairs', authenticateToken, requireRole('coordinator'), async (re
     const userId = req.user.user_id || req.user.id;
     const result = await query(`
       SELECT 
-        fc.*,
+        fc.coordinator_id,
+        fc.fair_id,
+        fc.assigned_date,
         f.name as fair_name,
         f.location,
         f.start_date,
@@ -190,18 +194,16 @@ router.get('/my-fairs', authenticateToken, requireRole('coordinator'), async (re
   }
 });
 
-// PUT - Actualizar responsabilidades
-router.put('/:id', authenticateToken, requireRole('admin'), async (req, res) => {
-  const { id } = req.params;
-  const { responsibilities } = req.body;
+// PUT - Actualizar asignación (no hay campos para actualizar, pero mantenemos para compatibilidad)
+router.put('/:fairId/:coordinatorId', authenticateToken, requireRole('admin'), async (req, res) => {
+  const { fairId, coordinatorId } = req.params;
   
   try {
     const result = await query(`
-      UPDATE fair_coordinators 
-      SET responsibilities = $1, updated_at = NOW()
-      WHERE id = $2
-      RETURNING *
-    `, [responsibilities, id]);
+      SELECT coordinator_id, fair_id, assigned_date
+      FROM fair_coordinators 
+      WHERE fair_id = $1 AND coordinator_id = $2
+    `, [fairId, coordinatorId]);
     
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Asignación no encontrada' });
@@ -209,17 +211,20 @@ router.put('/:id', authenticateToken, requireRole('admin'), async (req, res) => 
     
     res.json(result.rows[0]);
   } catch (error) {
-    console.error('Error updating assignment:', error);
-    res.status(500).json({ error: 'Error al actualizar asignación' });
+    console.error('Error fetching assignment:', error);
+    res.status(500).json({ error: 'Error al obtener asignación' });
   }
 });
 
 // DELETE - Remover coordinador de feria
-router.delete('/:id', authenticateToken, requireRole('admin'), async (req, res) => {
-  const { id } = req.params;
+router.delete('/:fairId/:coordinatorId', authenticateToken, requireRole('admin'), async (req, res) => {
+  const { fairId, coordinatorId } = req.params;
   
   try {
-    const result = await query('DELETE FROM fair_coordinators WHERE id = $1 RETURNING *', [id]);
+    const result = await query(
+      'DELETE FROM fair_coordinators WHERE fair_id = $1 AND coordinator_id = $2 RETURNING *',
+      [fairId, coordinatorId]
+    );
     
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Asignación no encontrada' });
