@@ -5,15 +5,18 @@
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useToast } from '../context/ToastContext';
 import GlobalAnnouncementForm from '../components/GlobalAnnouncementForm';
 import AssignCoordinatorForm from '../components/AssignCoordinatorForm';
 import HelpButton from '../components/HelpButton';
 import './AdminPanelPage.css';
 
 type AdminTool = 'announcements' | 'coordinators' | null;
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 export default function AdminPanelPage() {
   const { t } = useTranslation();
+  const { showToast } = useToast();
   const [activeTool, setActiveTool] = useState<AdminTool>(null);
 
   const tools = [
@@ -32,13 +35,49 @@ export default function AdminPanelPage() {
   ];
 
   const handleSubmitAnnouncement = async (data: any) => {
-    console.log('Announcement submitted:', data);
-    setActiveTool(null);
+    try {
+      const response = await fetch(`${API_BASE_URL}/announcements`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (!response.ok) throw new Error('Error al crear anuncio');
+
+      showToast('Anuncio creado exitosamente', 'success');
+      setActiveTool(null);
+    } catch (error) {
+      console.error('Error:', error);
+      showToast('Error al crear anuncio', 'error');
+    }
   };
 
   const handleSubmitCoordinator = async (data: any) => {
-    console.log('Coordinator assigned:', data);
-    setActiveTool(null);
+    try {
+      const response = await fetch(`${API_BASE_URL}/fair-coordinators`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          fairId: data.fairId,
+          coordinatorId: data.coordinatorId,
+          responsibilities: data.responsibilities
+        })
+      });
+
+      if (!response.ok) throw new Error('Error al asignar coordinador');
+
+      showToast('Coordinador asignado exitosamente', 'success');
+      setActiveTool(null);
+    } catch (error) {
+      console.error('Error:', error);
+      showToast('Error al asignar coordinador', 'error');
+    }
   };
 
   return (
