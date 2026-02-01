@@ -21,7 +21,8 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:3000',
-  'https://ihc-proj-weld.vercel.app'
+  'https://ihc-proj-weld.vercel.app',
+  'https://agro-proj.vercel.app'
 ];
 
 if (process.env.CORS_ORIGIN) {
