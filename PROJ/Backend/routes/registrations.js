@@ -10,16 +10,24 @@ const { query } = require('../db');
 router.get('/', async (req, res) => {
   try {
     const result = await query(`
-      SELECT r.*, 
-             p.name || ' ' || p.last_name AS producer_name,
-             f.name AS fair_name,
-             f.start_date
+      SELECT r.registration_id as id,
+             r.fair_id as "fairId",
+             r.producer_id as "producerId",
+             u.full_name as "producerName",
+             f.name as "fairName",
+             f.start_date as "fairStartDate",
+             r.registration_date as "registrationDate",
+             r.status,
+             r.assigned_spot as "assignedSpot",
+             r.notes,
+             r.created_at,
+             r.updated_at
       FROM registrations r
-      JOIN producers p ON r.producer_id = p.producer_id
+      JOIN users u ON r.producer_id = u.user_id
       JOIN fairs f ON r.fair_id = f.fair_id
       ORDER BY r.registration_date DESC
     `);
-    res.json({ success: true, data: result.rows });
+    res.json(result.rows);
   } catch (error) {
     console.error('Error obteniendo inscripciones:', error);
     res.status(500).json({ success: false, message: 'Error al obtener inscripciones' });
