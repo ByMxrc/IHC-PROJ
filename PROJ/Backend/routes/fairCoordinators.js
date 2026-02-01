@@ -43,10 +43,10 @@ router.post('/', authenticateToken, requireRole('admin'), async (req, res) => {
     // Crear asignación
     const result = await query(`
       INSERT INTO fair_coordinators 
-      (fair_id, coordinator_id, responsibilities, assigned_by, created_at, updated_at)
-      VALUES ($1, $2, $3, $4, NOW(), NOW())
+      (fair_id, coordinator_id, assigned_date)
+      VALUES ($1, $2, NOW())
       RETURNING *
-    `, [fairId, coordinatorId, responsibilities, req.user.user_id || req.user.id]);
+    `, [fairId, coordinatorId]);
     
     // Obtener datos de la feria para la notificación
     const fairData = await query(
@@ -69,7 +69,7 @@ router.post('/', authenticateToken, requireRole('admin'), async (req, res) => {
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error assigning coordinator:', error);
-    res.status(500).json({ error: 'Error al asignar coordinador' });
+    res.status(500).json({ error: 'Error al asignar coordinador', details: error.message });
   }
 });
 
