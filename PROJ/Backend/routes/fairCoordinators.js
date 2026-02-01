@@ -48,6 +48,25 @@ router.post('/', authenticateToken, requireRole('admin'), async (req, res) => {
       RETURNING *
     `, [fairId, coordinatorId, responsibilities, req.user.user_id || req.user.id]);
     
+    // Obtener datos de la feria para la notificación
+    const fairData = await query(
+      'SELECT name FROM fairs WHERE fair_id = $1',
+      [fairId]
+    );
+    
+    // Crear notificación para el coordinador
+    const fairName = fairData.rows[0]?.name || `Feria ${fairId}`;
+    await query(`
+      INSERT INTO notifications (user_id, title, message, type, category, created_at)
+      VALUES ($1, $2, $3, $4, $5, NOW())
+    `, [
+      coordinatorId,
+      'Nueva Asignación de Coordinación',
+      `Has sido asignado como coordinador a la feria: ${fairName}`,
+      'info',
+      'fair'
+    ]);
+    
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error assigning coordinator:', error);

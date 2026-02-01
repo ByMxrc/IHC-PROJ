@@ -35,6 +35,7 @@ interface IncidentData {
 export default function IncidentReportForm({ fairId, onSubmit, onCancel }: IncidentReportFormProps) {
   const { t } = useTranslation();
   const { getInputProps, speakError, speakSuccess } = useTTS();
+  const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
   const [fairs, setFairs] = useState<Fair[]>([]);
   const [loading, setLoading] = useState(true);
@@ -57,14 +58,14 @@ export default function IncidentReportForm({ fairId, onSubmit, onCancel }: Incid
 
   const fetchActiveFairs = async () => {
     try {
-      setLoading(false);
-      const res = await fetch('http://localhost:3000/api/fairs/active', {
+      const res = await fetch(`${API_BASE_URL}/fairs`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
       const data = await res.json();
       setFairs(data);
     } catch (error) {
       console.error('Error fetching fairs:', error);
+    } finally {
       setLoading(false);
     }
   };
