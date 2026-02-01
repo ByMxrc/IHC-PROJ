@@ -9,6 +9,8 @@ import FairRegistrationForm from '../components/FairRegistrationForm';
 import HelpButton from '../components/HelpButton';
 import './RegistrationsPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+
 export default function RegistrationsPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -27,7 +29,7 @@ export default function RegistrationsPage() {
       setLoading(true);
       
       // Cargar productores
-      const prodResponse = await fetch('http://localhost:3001/api/producers');
+      const prodResponse = await fetch(`${API_BASE_URL}/producers`);
       if (prodResponse.ok) {
         const prodResult = await prodResponse.json();
         const prodData = prodResult.data || [];
@@ -39,7 +41,7 @@ export default function RegistrationsPage() {
       }
       
       // Cargar ferias
-      const fairResponse = await fetch('http://localhost:3001/api/fairs');
+      const fairResponse = await fetch(`${API_BASE_URL}/fairs`);
       if (fairResponse.ok) {
         const fairResult = await fairResponse.json();
         const fairData = fairResult.data || [];
@@ -53,7 +55,7 @@ export default function RegistrationsPage() {
       }
 
       // Cargar inscripciones
-      const regResponse = await fetch('http://localhost:3001/api/registrations');
+      const regResponse = await fetch(`${API_BASE_URL}/registrations`);
       if (regResponse.ok) {
         const regResult = await regResponse.json();
         const regData = regResult.data || [];
@@ -68,7 +70,7 @@ export default function RegistrationsPage() {
 
   const handleSubmit = async (data: any) => {
     try {
-      const response = await fetch('http://localhost:3001/api/registrations', {
+      const response = await fetch(`${API_BASE_URL}/registrations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

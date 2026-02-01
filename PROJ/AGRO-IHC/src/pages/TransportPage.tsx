@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 import HelpButton from '../components/HelpButton';
 import './TransportPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+
 interface TransportRoute {
   route_id?: number;
   fair_id: number;
@@ -33,7 +35,7 @@ export default function TransportPage() {
   const fetchRoutes = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3001/api/transport');
+      const response = await fetch(`${API_BASE_URL}/transport`);
       
       if (response.ok) {
         const data = await response.json();

@@ -10,6 +10,8 @@ import { useKeyboardShortcut } from '../hooks/useKeyboardShortcuts';
 import TermsModal from './TermsModal';
 import './UserRegistration.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+
 interface UserFormData {
   username: string;
   email: string;
@@ -156,7 +158,7 @@ export default function UserRegistration() {
     if (validateForm()) {
       setLoading(true);
       try {
-        const response = await fetch('http://localhost:3001/api/users', {
+        const response = await fetch(`${API_BASE_URL}/users`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

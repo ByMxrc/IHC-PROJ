@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import FairForm from '../components/FairForm';
 import FairRegistrationForm from '../components/FairRegistrationForm';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 import HelpButton from '../components/HelpButton';
 import './FairsPage.css';
 import FairInfoModal from '../components/FairInfoModal';
@@ -28,7 +30,7 @@ export default function FairsPage() {
   const fetchFairs = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3001/api/fairs');
+      const response = await fetch(`${API_BASE_URL}/fairs`);
       if (!response.ok) throw new Error('Error al cargar ferias');
       const result = await response.json();
       console.log('API Response:', result);
@@ -61,7 +63,7 @@ export default function FairsPage() {
 
   const handleSubmit = async (fairData: Omit<Fair, 'id' | 'currentCapacity'>) => {
     try {
-      const response = await fetch('http://localhost:3001/api/fairs', {
+      const response = await fetch(`${API_BASE_URL}/fairs`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

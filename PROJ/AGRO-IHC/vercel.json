@@ -1,7 +1,7 @@
 {
-  "buildCommand": "npm run build && npm install --prefix server",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "env": {
-    "VITE_API_URL": "https://ihc-proj-weld.vercel.app/api"
+    "VITE_API_URL": "https://ihc-proj-e8l3.vercel.app/api"
   }
 }

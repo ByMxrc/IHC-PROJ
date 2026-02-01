@@ -8,6 +8,8 @@ import { useAuth } from '../context/AuthContext';
 import HelpButton from '../components/HelpButton';
 import './SalesPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+
 interface Sale {
   sale_id?: number;
   fair_id: number;
@@ -42,7 +44,7 @@ export default function SalesPage() {
     try {
       setLoading(true);
       const params = user?.role === 'producer' ? `?producer_id=${user.id}` : '';
-      const response = await fetch(`http://localhost:3001/api/sales${params}`);
+      const response = await fetch(`${API_BASE_URL}/sales${params}`);
       
       if (response.ok) {
         const data = await response.json();
@@ -61,7 +63,7 @@ export default function SalesPage() {
     try {
       const total = parseFloat(formData.quantity_sold) * parseFloat(formData.unit_price);
       
-      const response = await fetch('http://localhost:3001/api/sales', {
+      const response = await fetch(`${API_BASE_URL}/sales`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

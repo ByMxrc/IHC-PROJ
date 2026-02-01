@@ -10,6 +10,8 @@ import ProducerForm from '../components/ProducerForm';
 import HelpButton from '../components/HelpButton';
 import './ProducersPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+
 export default function ProducersPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -24,7 +26,7 @@ export default function ProducersPage() {
   const fetchProducers = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3001/api/producers');
+      const response = await fetch(`${API_BASE_URL}/producers`);
       if (!response.ok) throw new Error('Error al cargar productores');
       const result = await response.json();
       
@@ -58,7 +60,7 @@ export default function ProducersPage() {
 
   const handleSubmit = async (producerData: Omit<Producer, 'id' | 'registrationDate'>) => {
     try {
-      const response = await fetch('http://localhost:3001/api/producers', {
+      const response = await fetch(`${API_BASE_URL}/producers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
