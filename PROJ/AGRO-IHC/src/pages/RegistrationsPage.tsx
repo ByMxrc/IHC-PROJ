@@ -32,7 +32,7 @@ export default function RegistrationsPage() {
       const prodResponse = await fetch(`${API_BASE_URL}/producers`);
       if (prodResponse.ok) {
         const prodResult = await prodResponse.json();
-        const prodData = prodResult.data || [];
+        const prodData = Array.isArray(prodResult) ? prodResult : (prodResult.data || []);
         setProducers(prodData.map((p: any) => ({
           id: p.producer_id?.toString() || p.id,
           name: p.name || p.first_name || '',
@@ -44,13 +44,13 @@ export default function RegistrationsPage() {
       const fairResponse = await fetch(`${API_BASE_URL}/fairs`);
       if (fairResponse.ok) {
         const fairResult = await fairResponse.json();
-        const fairData = fairResult.data || [];
+        const fairData = Array.isArray(fairResult) ? fairResult : (fairResult.data || []);
         setFairs(fairData.map((f: any) => ({
           id: f.fair_id?.toString() || f.id,
           name: f.name || '',
-          startDate: new Date(f.start_date),
-          currentCapacity: f.current_registrations || 0,
-          maxCapacity: f.max_capacity || 0
+          startDate: new Date(f.start_date || f.startDate),
+          currentCapacity: f.current_registrations || f.currentCapacity || 0,
+          maxCapacity: f.max_capacity || f.maxCapacity || 0
         })));
       }
 
@@ -58,7 +58,7 @@ export default function RegistrationsPage() {
       const regResponse = await fetch(`${API_BASE_URL}/registrations`);
       if (regResponse.ok) {
         const regResult = await regResponse.json();
-        const regData = regResult.data || [];
+        const regData = Array.isArray(regResult) ? regResult : (regResult.data || []);
         setRegistrations(regData);
       }
     } catch (error) {

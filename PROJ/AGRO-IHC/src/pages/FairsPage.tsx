@@ -35,7 +35,8 @@ export default function FairsPage() {
       const result = await response.json();
       console.log('API Response:', result);
       
-      const fairsData = result.data || [];
+      // El API devuelve el array directamente
+      const fairsData = Array.isArray(result) ? result : (result.data || []);
       console.log('Fairs Data:', fairsData);
       const mappedFairs = fairsData.map((f: any) => ({
         id: f.fair_id?.toString() || f.id,
@@ -43,12 +44,12 @@ export default function FairsPage() {
         description: f.description || '',
         location: f.location || '',
         address: f.address || '',
-        startDate: new Date(f.start_date),
-        endDate: new Date(f.end_date),
-        maxCapacity: f.max_capacity || 0,
-        currentCapacity: f.current_registrations || 0,
+        startDate: new Date(f.start_date || f.startDate),
+        endDate: new Date(f.end_date || f.endDate),
+        maxCapacity: f.max_capacity || f.maxCapacity || 0,
+        currentCapacity: f.current_registrations || f.currentCapacity || 0,
         status: f.status || 'scheduled',
-        productCategories: Array.isArray(f.product_categories) ? f.product_categories : (f.product_categories ? JSON.parse(f.product_categories) : []),
+        productCategories: Array.isArray(f.product_categories || f.productCategories) ? (f.product_categories || f.productCategories) : (f.product_categories || f.productCategories ? JSON.parse(f.product_categories || f.productCategories) : []),
         requirements: Array.isArray(f.requirements) ? f.requirements : (f.requirements ? JSON.parse(f.requirements) : []),
       }));
       
