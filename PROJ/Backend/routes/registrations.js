@@ -13,19 +13,19 @@ router.get('/', async (req, res) => {
       SELECT r.registration_id as id,
              r.fair_id as "fairId",
              r.producer_id as "producerId",
-             u.full_name as "producerName",
+             COALESCE(u.full_name, p.first_name || ' ' || p.last_name) as "producerName",
              f.name as "fairName",
              f.start_date as "fairStartDate",
              r.registration_date as "registrationDate",
              r.status,
              r.assigned_spot as "assignedSpot",
-             r.estimated_quantity as "estimatedQuantity",
              r.notes,
              r.created_at,
              r.updated_at
       FROM registrations r
-      JOIN users u ON r.producer_id = u.user_id
-      JOIN fairs f ON r.fair_id = f.fair_id
+      LEFT JOIN producers p ON r.producer_id = p.producer_id
+      LEFT JOIN users u ON p.user_id = u.user_id
+      LEFT JOIN fairs f ON r.fair_id = f.fair_id
       ORDER BY r.registration_date DESC
     `);
     res.json(result.rows);
