@@ -145,10 +145,14 @@ router.post('/login', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error en login:', error);
+    console.error('❌ ERROR EN LOGIN:');
+    console.error('   Mensaje:', error.message);
+    console.error('   Stack:', error.stack);
+    console.error('   Code:', error.code);
     res.status(500).json({ 
       success: false,
-      message: 'Error en el servidor' 
+      message: 'Error en el servidor',
+      error: error.message 
     });
   }
 });
