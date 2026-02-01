@@ -40,11 +40,18 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
   // Cargar notificaciones del backend cuando el usuario se loguea
   useEffect(() => {
+    console.log('🔔 NotificationProvider useEffect - user:', user);
     if (user?.id) {
+      console.log(`📡 Sincronizando notificaciones para user_id: ${user.id}`);
       fetchNotifications();
       // Recargar notificaciones cada 30 segundos
-      const interval = setInterval(fetchNotifications, 30000);
+      const interval = setInterval(() => {
+        console.log(`🔄 Auto-sincronizando notificaciones para user_id: ${user.id}`);
+        fetchNotifications();
+      }, 30000);
       return () => clearInterval(interval);
+    } else {
+      console.log('⚠️ No hay usuario logueado');
     }
   }, [user?.id]);
 
@@ -67,7 +74,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
           id: n.notification_id || n.id,
           title: n.title,
           message: n.message,
-          type: n.type || 'info',
+          type: (n.type === 'success' || n.type === 'error' || n.type === 'warning' || n.type === 'info') ? n.type : 'info',
           category: n.category || 'system',
           isRead: n.is_read || false,
           createdAt: new Date(n.created_at),
@@ -75,6 +82,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         }));
         
         setNotifications(mapped.slice(0, MAX_NOTIFICATIONS));
+        console.log('✅ Notificaciones sincronizadas:', mapped);
       }
     } catch (error) {
       console.error('Error fetching notifications:', error);
