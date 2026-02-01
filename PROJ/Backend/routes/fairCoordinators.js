@@ -13,6 +13,12 @@ router.post('/', authenticateToken, requireRole('admin'), async (req, res) => {
   const { fairId, coordinatorId, responsibilities } = req.body;
   
   try {
+    // Validar que fairId y coordinatorId estén presentes
+    if (!fairId || !coordinatorId) {
+      console.error('Missing required fields:', { fairId, coordinatorId });
+      return res.status(400).json({ error: 'fairId y coordinatorId son requeridos' });
+    }
+
     // Verificar que el coordinador exista y tenga el rol correcto
     const coordinator = await query(
       'SELECT user_id FROM users WHERE user_id = $1 AND role = $2',
