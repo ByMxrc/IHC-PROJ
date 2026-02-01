@@ -17,10 +17,12 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { HomeContentProvider } from './context/HomeContentContext';
 import { AccessibilityProvider, useAccessibility } from './context/AccessibilityContext';
 import { NotificationProvider } from './context/NotificationContext';
+import { ToastProvider, useToast } from './context/ToastContext';
 import { useKeyboardShortcuts, DEFAULT_SHORTCUTS } from './hooks/useKeyboardShortcuts';
 import Navigation from './components/Navigation';
 import ShortcutsHelp from './components/ShortcutsHelp';
 import TermsModal from './components/TermsModal';
+import Toast from './components/Toast';
 import HomePage from './pages/HomePage';
 import ProducersPage from './pages/ProducersPage';
 import FairsPage from './pages/FairsPage';
@@ -42,6 +44,7 @@ import './App.css';
 function AppContent() {
   const { isAuthenticated, logout } = useAuth();
   const { user } = useAuth();
+  const { toasts, removeToast } = useToast();
   const {
     theme,
     setTheme,
@@ -173,6 +176,9 @@ function AppContent() {
         {renderPage()}
       </main>
 
+      {/* Notificaciones Emergentes */}
+      <Toast toasts={toasts} onRemove={removeToast} />
+
       {/* Modal de Términos y Condiciones */}
       <TermsModal 
         isOpen={showTermsModal}
@@ -204,11 +210,13 @@ function App() {
   return (
     <AccessibilityProvider>
       <AuthProvider>
-        <NotificationProvider>
-          <HomeContentProvider>
-            <AppContent />
-          </HomeContentProvider>
-        </NotificationProvider>
+        <ToastProvider>
+          <NotificationProvider>
+            <HomeContentProvider>
+              <AppContent />
+            </HomeContentProvider>
+          </NotificationProvider>
+        </ToastProvider>
       </AuthProvider>
     </AccessibilityProvider>
   );
