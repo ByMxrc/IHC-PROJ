@@ -3,11 +3,5 @@
   "outputDirectory": "dist",
   "env": {
     "VITE_API_URL": "https://ihc-proj-weld.vercel.app/api"
-  },
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/server/server.js"
-    }
-  ]
+  }
 }
