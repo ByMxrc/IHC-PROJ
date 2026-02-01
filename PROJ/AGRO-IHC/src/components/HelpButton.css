@@ -1,0 +1,77 @@
+/**
+ * Estilos del Botón de Ayuda Flotante
+ */
+
+.help-button-float {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color, #4caf50), var(--accent-color, #45a049));
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  animation: helpPulse 2s ease-in-out infinite;
+}
+
+.help-button-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  animation: none;
+}
+
+.help-button-float:active {
+  transform: scale(0.95);
+}
+
+.help-icon {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+  user-select: none;
+}
+
+/* Animación de pulso sutil */
+@keyframes helpPulse {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 0 10px rgba(76, 175, 80, 0.2);
+  }
+}
+
+/* Accesibilidad: Sin animaciones si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+  .help-button-float {
+    animation: none;
+  }
+}
+
+/* Responsive: Ajustar posición en móviles */
+@media (max-width: 768px) {
+  .help-button-float {
+    bottom: 1rem;
+    right: 1rem;
+    width: 48px;
+    height: 48px;
+  }
+
+  .help-icon {
+    font-size: 1.5rem;
+  }
+}
+
+/* Asegurar que no interfiera con el scroll */
+@media print {
+  .help-button-float {
+    display: none;
+  }
+}

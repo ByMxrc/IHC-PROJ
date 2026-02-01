@@ -1,0 +1,148 @@
+/**
+ * Estilos Globales de la Aplicación
+ * REQUISITOS: Diseño responsive, accesibilidad, feedback visual
+ */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 0;
+  min-height: calc(100vh - 150px);
+  background: var(--bg-primary);
+}
+
+.app-footer {
+  background: var(--primary-color);
+  color: white;
+  padding: 1.5rem;
+  margin-top: auto;
+  box-shadow: 0 -2px 8px var(--shadow-color);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.95;
+}
+
+.footer-contact {
+  margin-top: 0.5rem !important;
+  font-size: 0.85rem !important;
+  opacity: 0.9 !important;
+}
+
+/* Utilidades globales */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 44px;
+  min-width: 120px;
+  font-family: inherit;
+}
+
+.btn:focus {
+  outline: 2px solid #333;
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1b5e20 0%, #388e3c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
+
+.btn-secondary {
+  background: #f5f5f5;
+  color: #333;
+  border: 2px solid #ddd;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #e0e0e0;
+  border-color: #bbb;
+}
+
+/* Responsive - Tablets */
+@media (max-width: 1024px) {
+  .main-content {
+    min-height: calc(100vh - 120px);
+  }
+
+  .btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* Responsive - Móviles */
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 0;
+    min-height: calc(100vh - 100px);
+  }
+
+  .app-footer {
+    padding: 1rem 0.75rem;
+  }
+
+  .footer-content p {
+    font-size: 0.8rem;
+  }
+
+  .footer-contact {
+    font-size: 0.75rem !important;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    min-width: 100px;
+  }
+}
+
+/* Responsive - Móviles pequeños */
+@media (max-width: 480px) {
+  .app-footer {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .footer-content p {
+    font-size: 0.75rem;
+  }
+
+  .btn {
+    padding: 0.55rem 0.85rem;
+    font-size: 0.85rem;
+    min-width: 90px;
+  }
+}
+

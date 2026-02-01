@@ -1,0 +1,199 @@
+/**
+ * Estilos de la Página de Ferias
+ */
+
+.fairs-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.fairs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
+  gap: 2rem;
+}
+
+.fair-card {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fair-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px var(--shadow-color);
+}
+
+.fair-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.fair-name {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+}
+
+.fair-status {
+  padding: 0.375rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-scheduled {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.status-in-progress {
+  background: #fff9c4;
+  color: #f57f17;
+}
+
+.status-completed {
+  background: #c8e6c9;
+  color: #1b5e20;
+}
+
+.status-cancelled {
+  background: #ffcdd2;
+  color: #b71c1c;
+}
+
+.fair-description {
+  color: var(--text-secondary, #666);
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+}
+
+.fair-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.detail-item {
+  font-size: 0.95rem;
+  color: var(--text-primary, #333);
+}
+
+.detail-item strong {
+  color: var(--primary-color, #2e7d32);
+  margin-right: 0.5rem;
+}
+
+.categories-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.category-tag {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Responsive - Tablets */
+@media (max-width: 1024px) {
+  .fairs-page {
+    padding: 1.5rem;
+  }
+
+  .fairs-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+/* Responsive - Móviles */
+@media (max-width: 768px) {
+  .fairs-page {
+    padding: 1rem;
+  }
+
+  .page-header {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .page-description {
+    font-size: 0.9rem;
+  }
+
+  .fairs-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .fair-card {
+    padding: 1.5rem;
+  }
+
+  .fair-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .fair-name {
+    font-size: 1.1rem;
+  }
+
+  .fair-status {
+    align-self: flex-start;
+  }
+
+  .fair-info-grid {
+    gap: 0.75rem;
+  }
+
+  .fair-info-item {
+    font-size: 0.85rem;
+  }
+}
+
+/* Responsive - Móviles pequeños */
+@media (max-width: 480px) {
+  .fairs-page {
+    padding: 0.75rem;
+  }
+
+  .page-header {
+    padding: 0.75rem;
+  }
+
+  .page-title {
+    font-size: 1.25rem;
+  }
+
+  .fair-card {
+    padding: 1.25rem;
+  }
+
+  .fair-name {
+    font-size: 1rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+}

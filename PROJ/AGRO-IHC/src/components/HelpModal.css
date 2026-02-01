@@ -1,0 +1,208 @@
+/**
+ * Estilos del Modal de Ayuda
+ */
+
+.help-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.help-modal {
+  background: var(--background-color, white);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 700px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s ease;
+}
+
+.help-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color, #ddd);
+}
+
+.help-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--text-color, #333);
+}
+
+.help-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-color, #666);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.help-modal-close:hover {
+  background: var(--hover-color, #f5f5f5);
+  color: var(--primary-color, #4caf50);
+}
+
+.help-modal-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.help-video {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+}
+
+.help-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.help-text {
+  color: var(--text-color, #333);
+  line-height: 1.6;
+}
+
+.help-text h4 {
+  color: var(--primary-color, #4caf50);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.help-text ul,
+.help-text ol {
+  margin: 0.5rem 0 1rem 1.5rem;
+}
+
+.help-text li {
+  margin: 0.5rem 0;
+}
+
+.help-text strong {
+  color: var(--primary-color, #4caf50);
+}
+
+.help-modal-footer {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border-color, #ddd);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.help-close-button {
+  background: var(--primary-color, #4caf50);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.help-close-button:hover {
+  background: var(--accent-color, #45a049);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.help-close-button:active {
+  transform: translateY(0);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .help-modal {
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .help-modal-header,
+  .help-modal-content,
+  .help-modal-footer {
+    padding: 1rem 1.5rem;
+  }
+
+  .help-modal-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .help-text h4 {
+    font-size: 1rem;
+  }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .help-modal-overlay,
+  .help-modal {
+    animation: none;
+  }
+}
+
+/* Scroll personalizado */
+.help-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.help-modal-content::-webkit-scrollbar-track {
+  background: var(--background-color, #f1f1f1);
+}
+
+.help-modal-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color, #4caf50);
+  border-radius: 4px;
+}
+
+.help-modal-content::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color, #45a049);
+}

@@ -1,0 +1,72 @@
+.producer-tools-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.producer-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.tool-card {
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tool-card:hover {
+  background: var(--menu-item-hover-bg);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
+}
+
+.tool-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.tool-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.tool-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.tool-content {
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .producer-tools-page {
+    padding: 1rem;
+  }
+
+  .producer-tools-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .tool-card {
+    padding: 1.5rem;
+  }
+
+  .tool-icon {
+    font-size: 2.5rem;
+  }
+}

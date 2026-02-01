@@ -1,0 +1,22 @@
+.producer-home-page {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0001;
+  padding: 2rem 2.5rem;
+  text-align: center;
+}
+.producer-home-page h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.producer-home-page ul {
+  text-align: left;
+  margin: 2rem auto 1rem auto;
+  padding-left: 1.2rem;
+}
+.producer-home-page li {
+  margin-bottom: 0.7rem;
+  font-size: 1.1rem;
+}

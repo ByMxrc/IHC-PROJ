@@ -1,0 +1,255 @@
+.assign-coordinator-form {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.assign-coordinator-form h2 {
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+.form-description {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color 0.3s;
+}
+
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.form-group select.error,
+.form-group textarea.error {
+  border-color: var(--error-color);
+}
+
+.required {
+  color: var(--error-color);
+  margin-left: 2px;
+}
+
+.error-message {
+  display: block;
+  color: var(--error-color);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.char-count {
+  display: block;
+  text-align: right;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.coordinator-info {
+  background: var(--bg-primary);
+  padding: 1rem;
+  border-radius: 6px;
+  border-left: 4px solid var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.coordinator-info h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.coordinator-info p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.75rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.checkbox-label:hover {
+  background: var(--bg-hover);
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin-top: 0.25rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.responsibility-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.responsibility-title {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.responsibility-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.assignment-summary {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+  padding: 1.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.assignment-summary h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.assignment-summary p {
+  margin: 0.5rem 0;
+  color: var(--text-primary);
+}
+
+.assignment-summary ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.assignment-summary li {
+  margin: 0.25rem 0;
+  color: var(--text-secondary);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-hover);
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .assign-coordinator-form {
+    padding: 1.5rem;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+
+  .checkbox-label {
+    padding: 0.5rem;
+  }
+}
+
+/* Alto Contraste */
+.high-contrast .assign-coordinator-form {
+  border: 2px solid var(--text-primary);
+}
+
+.high-contrast .coordinator-info,
+.high-contrast .assignment-summary {
+  border: 2px solid var(--text-primary);
+}
+
+/* Tamaños de Texto */
+.text-large .assign-coordinator-form {
+  font-size: 1.125rem;
+}
+
+.text-extra-large .assign-coordinator-form {
+  font-size: 1.25rem;
+}

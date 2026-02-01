@@ -1,0 +1,338 @@
+/**
+ * Estilos Globales y Reset CSS
+ * REQUISITOS: Accesibilidad, contraste, fuentes legibles
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Colores principales */
+  --primary-green: #2e7d32;
+  --primary-green-light: #4caf50;
+  --primary-green-dark: #1b5e20;
+  
+  /* Colores secundarios */
+  --gray-100: #f5f5f5;
+  --gray-200: #e0e0e0;
+  --gray-300: #bbb;
+  --gray-500: #666;
+  --gray-700: #333;
+  
+  /* Estados */
+  --success: #4caf50;
+  --warning: #ff9800;
+  --error: #f44336;
+  --info: #2196f3;
+  
+  /* Fuentes */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Tamaños de fuente base */
+  font-size: 16px;
+  line-height: 1.6;
+  
+  /* Colores de texto */
+  color: #333;
+  background-color: #ffffff;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Mejora de accesibilidad para enfoque */
+*:focus-visible {
+  outline: 2px solid var(--primary-green);
+  outline-offset: 2px;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--gray-700);
+}
+
+/* Links */
+a {
+  color: var(--primary-green);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary-green-dark);
+}
+
+/* Buttons */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Inputs */
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Mejoras de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-500);
+}
+
+/* Utilidades de accesibilidad */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Tamaños de texto */
+body.text-normal {
+  font-size: 16px;
+}
+
+body.text-large {
+  font-size: 20px;
+}
+
+body.text-large h1 { font-size: 2.75rem; }
+body.text-large h2 { font-size: 2.25rem; }
+body.text-large h3 { font-size: 1.875rem; }
+body.text-large p, body.text-large button, body.text-large input { font-size: 1.125rem; }
+
+body.text-extra-large {
+  font-size: 24px;
+}
+
+body.text-extra-large h1 { font-size: 3.25rem; }
+body.text-extra-large h2 { font-size: 2.75rem; }
+body.text-extra-large h3 { font-size: 2.25rem; }
+body.text-extra-large p, body.text-extra-large button, body.text-extra-large input { font-size: 1.25rem; }
+
+/* Alto contraste */
+body.high-contrast {
+  --primary-green: #000000;
+  --primary-green-light: #333333;
+  --primary-green-dark: #000000;
+  --gray-100: #ffffff;
+  --gray-200: #ffffff;
+  --gray-300: #000000;
+  --gray-500: #000000;
+  --gray-700: #000000;
+  --success: #000000;
+  --warning: #000000;
+  --error: #000000;
+  --info: #000000;
+}
+
+body.high-contrast * {
+  border-color: #000 !important;
+}
+
+body.high-contrast button,
+body.high-contrast input,
+body.high-contrast select,
+body.high-contrast textarea {
+  border: 3px solid #000 !important;
+}
+
+body.high-contrast *:focus-visible {
+  outline: 4px solid #000 !important;
+  outline-offset: 3px;
+}
+
+/* Alertas visuales */
+body.visual-alerts .notification,
+body.visual-alerts .alert,
+body.visual-alerts .message {
+  animation: pulse 0.5s ease-in-out;
+  border-left: 5px solid currentColor;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Mejora de enfoque visible */
+body *:focus-visible {
+  outline: 3px solid var(--primary-green);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Indicador de carga accesible */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  border: 4px solid var(--gray-200);
+  border-top-color: var(--primary-green);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+/* ============================================
+   UTILIDADES RESPONSIVE
+   ============================================ */
+
+/* Contenedor responsive */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+}
+
+/* Visibilidad responsive */
+.hide-mobile {
+  display: block;
+}
+
+.show-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+  
+  .show-mobile {
+    display: block !important;
+  }
+}
+
+/* Texto responsive */
+.text-responsive {
+  font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+.heading-responsive {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+/* Grid responsive */
+.grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .grid-responsive {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* Espaciado responsive */
+.p-responsive {
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.m-responsive {
+  margin: clamp(1rem, 3vw, 2rem);
+}
+
+/* Touch targets para móviles (mínimo 44x44px) */
+@media (max-width: 768px) {
+  button,
+  a,
+  input[type="button"],
+  input[type="submit"],
+  .clickable {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Tamaño de fuente base responsive */
+@media (max-width: 768px) {
+  :root {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    font-size: 14px;
+  }
+}
+
