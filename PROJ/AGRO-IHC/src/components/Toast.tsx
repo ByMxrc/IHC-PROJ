@@ -3,7 +3,7 @@
  * Aparece brevemente en la esquina superior derecha
  */
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import './Toast.css';
 
 export interface ToastMessage {
