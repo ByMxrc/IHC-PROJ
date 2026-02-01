@@ -1,15 +1,18 @@
 /**
- * Función Serverless para Vercel
- * Exporta las rutas de la API de Express como una función de Vercel
+ * Función Serverless Catchall para Vercel
+ * Maneja todas las rutas de /api
  */
 
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const { pool } = require('../server/db');
+const path = require('path');
 
 // Cargar variables de entorno
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: path.join(__dirname, '../.env') });
+
+// Importar el servidor configurado
+const { pool } = require('../server/db');
 
 // Crear aplicación Express
 const app = express();
@@ -40,12 +43,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// =====================================================
-// RUTAS DE LA API
-// =====================================================
-
 // Ruta de prueba
-app.get('/api/health', async (req, res) => {
+app.get('/health', async (req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');
     res.json({ 
@@ -81,29 +80,29 @@ const technicalHelpRoutes = require('../server/routes/technicalHelp');
 const translationsRoutes = require('../server/routes/translations');
 const transportRoutes = require('../server/routes/transport');
 
-// Registrar rutas
-app.use('/api/auth', authRoutes);
-app.use('/api/users', usersRoutes);
-app.use('/api/producers', producersRoutes);
-app.use('/api/products', productsRoutes);
-app.use('/api/fairs', fairsRoutes);
-app.use('/api/fair-coordinators', fairCoordinatorsRoutes);
-app.use('/api/fair-surveys', fairSurveysRoutes);
-app.use('/api/registrations', registrationsRoutes);
-app.use('/api/announcements', announcementsRoutes);
-app.use('/api/notifications', notificationsRoutes);
-app.use('/api/sales', salesRoutes);
-app.use('/api/post-sale', postSaleRoutes);
-app.use('/api/incidents', incidentsRoutes);
-app.use('/api/content-reports', contentReportsRoutes);
-app.use('/api/technical-help', technicalHelpRoutes);
-app.use('/api/translations', translationsRoutes);
-app.use('/api/transport', transportRoutes);
+// Registrar rutas (sin el prefijo /api porque Vercel ya lo agrega)
+app.use('/auth', authRoutes);
+app.use('/users', usersRoutes);
+app.use('/producers', producersRoutes);
+app.use('/products', productsRoutes);
+app.use('/fairs', fairsRoutes);
+app.use('/fair-coordinators', fairCoordinatorsRoutes);
+app.use('/fair-surveys', fairSurveysRoutes);
+app.use('/registrations', registrationsRoutes);
+app.use('/announcements', announcementsRoutes);
+app.use('/notifications', notificationsRoutes);
+app.use('/sales', salesRoutes);
+app.use('/post-sale', postSaleRoutes);
+app.use('/incidents', incidentsRoutes);
+app.use('/content-reports', contentReportsRoutes);
+app.use('/technical-help', technicalHelpRoutes);
+app.use('/translations', translationsRoutes);
+app.use('/transport', transportRoutes);
 
 // Manejo de errores 404
 app.use((req, res) => {
   res.status(404).json({ error: 'Ruta no encontrada' });
 });
 
-// Exportar como función serverless de Vercel
+// Exportar como handler de Vercel
 module.exports = app;
