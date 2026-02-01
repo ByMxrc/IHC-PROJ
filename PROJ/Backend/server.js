@@ -46,6 +46,11 @@ app.use((req, res, next) => {
 // RUTAS DE LA API
 // =====================================================
 
+// Ruta raíz
+app.get('/', (req, res) => {
+  res.json({ message: 'API AgroFeria', status: 'OK', version: '1.0.0' });
+});
+
 // Ruta de prueba - Health Check
 app.get('/api/health', async (req, res) => {
   try {
