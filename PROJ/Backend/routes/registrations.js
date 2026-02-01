@@ -19,6 +19,7 @@ router.get('/', async (req, res) => {
              r.registration_date as "registrationDate",
              r.status,
              r.assigned_spot as "assignedSpot",
+             r.estimated_quantity as "estimatedQuantity",
              r.notes,
              r.created_at,
              r.updated_at

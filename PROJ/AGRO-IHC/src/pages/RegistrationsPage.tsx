@@ -149,7 +149,7 @@ export default function RegistrationsPage() {
                     <td>{reg.producerName || '-'}</td>
                     <td>{reg.fairName || '-'}</td>
                     <td>{reg.notes || '-'}</td>
-                    <td>{reg.estimatedQuantity || reg.estimated_quantity || '-'}</td>
+                    <td>{reg.estimatedQuantity || '-'}</td>
                     <td>
                       <span className={`status-badge status-${reg.status}`}>
                         {reg.status === 'approved' ? '✅ Aprobado' : 

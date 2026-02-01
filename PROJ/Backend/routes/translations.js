@@ -33,14 +33,29 @@ router.get('/', async (req, res) => {
 // ============================================
 router.get('/languages', async (req, res) => {
   try {
-    const result = await query(
-      'SELECT * FROM languages WHERE is_active = true ORDER BY display_order',
-      []
-    );
+    // Devolver idiomas disponibles como datos estáticos
+    const languages = [
+      { 
+        id: 1, 
+        code: 'es', 
+        name: 'Español',
+        displayName: 'Español',
+        isActive: true, 
+        displayOrder: 1 
+      },
+      { 
+        id: 2, 
+        code: 'en', 
+        name: 'English',
+        displayName: 'English',
+        isActive: true, 
+        displayOrder: 2 
+      }
+    ];
 
     res.json({
       success: true,
-      data: result.rows
+      data: languages
     });
   } catch (error) {
     console.error('Error al obtener idiomas:', error);
@@ -219,18 +234,25 @@ router.get('/home-content/:lang?', async (req, res) => {
   try {
     const lang = req.params.lang || req.query.lang || 'es';
 
-    const result = await query(
-      `SELECT content_key, content 
-       FROM home_content_translations 
-       WHERE language_code = $1`,
-      [lang]
-    );
+    // Contenido estático en diferentes idiomas
+    const homeContent = {
+      es: {
+        'home.title': 'Bienvenido a AgroFeria',
+        'home.subtitle': 'La plataforma de ferias agrícolas más grande del Perú',
+        'home.description': 'Conecta con productores y compradores de productos agrícolas',
+        'home.features.title': 'Características principales',
+        'home.cta.button': 'Comenzar ahora'
+      },
+      en: {
+        'home.title': 'Welcome to AgroFair',
+        'home.subtitle': 'The largest agricultural fair platform in Peru',
+        'home.description': 'Connect with agricultural product producers and buyers',
+        'home.features.title': 'Key features',
+        'home.cta.button': 'Get started now'
+      }
+    };
 
-    // Convertir array a objeto
-    const content = {};
-    result.rows.forEach(row => {
-      content[row.content_key] = row.content;
-    });
+    const content = homeContent[lang] || homeContent.es;
 
     res.json({
       success: true,
