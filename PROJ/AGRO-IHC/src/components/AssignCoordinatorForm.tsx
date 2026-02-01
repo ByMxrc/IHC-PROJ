@@ -36,6 +36,7 @@ export default function AssignCoordinatorForm({
 }: AssignCoordinatorFormProps) {
   const { t } = useTranslation();
   const { speak, getInputProps } = useTTS();
+  const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
   const [fairs, setFairs] = useState<Fair[]>([]);
   const [coordinators, setCoordinators] = useState<Coordinator[]>([]);
@@ -67,7 +68,7 @@ export default function AssignCoordinatorForm({
     try {
       setLoading(true);
       // Fetch ferias
-      const fairsRes = await fetch('http://localhost:3000/api/fairs', {
+      const fairsRes = await fetch(`${API_BASE_URL}/fairs`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
       const fairsData = await fairsRes.json();
@@ -81,7 +82,7 @@ export default function AssignCoordinatorForm({
       setFairs(normalizedFairs);
 
       // Fetch coordinadores
-      const coordsRes = await fetch('http://localhost:3000/api/users?role=coordinator', {
+      const coordsRes = await fetch(`${API_BASE_URL}/users?role=coordinator`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
       const coordsData = await coordsRes.json();
