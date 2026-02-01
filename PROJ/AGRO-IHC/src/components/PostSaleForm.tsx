@@ -44,6 +44,7 @@ export default function PostSaleForm({ registrationId, fairId, onSubmit, onCance
   const { getInputProps, speakSuccess } = useTTS();
 
   const [fairs, setFairs] = useState<Fair[]>([]);
+  const [selectedFairId, setSelectedFairId] = useState<number | null>(fairId || null);
   const [loading, setLoading] = useState(true);
 
   const [formData, setFormData] = useState<PostSaleData>({
@@ -78,6 +79,10 @@ export default function PostSaleForm({ registrationId, fairId, onSubmit, onCance
 
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
+
+    if (!selectedFairId) {
+      newErrors.fair = 'Feria es requerida';
+    }
 
     if (!formData.registrationId) {
       newErrors.registrationId = 'ID de inscripción es requerido';
@@ -161,6 +166,26 @@ export default function PostSaleForm({ registrationId, fairId, onSubmit, onCance
     <form className="post-sale-form" onSubmit={handleSubmit}>
       <h2>{t('postSale.title')}</h2>
       <p className="form-description">{t('postSale.description')}</p>
+
+      {/* Selección de Feria */}
+      <div className="form-group">
+        <label htmlFor="fair">
+          Feria <span className="required">*</span>
+        </label>
+        <select
+          id="fair"
+          value={selectedFairId || ''}
+          onChange={(e) => setSelectedFairId(parseInt(e.target.value) || null)}
+          className={errors.fair ? 'error' : ''}
+          disabled={!!fairId}
+        >
+          <option value="">Seleccione una feria</option>
+          {fairs.map((fair) => (
+            <option key={fair.id} value={fair.id}>{fair.name}</option>
+          ))}
+        </select>
+        {errors.fair && <span className="error-message">{errors.fair}</span>}
+      </div>
 
       {/* Selección de Inscripción */}
       <div className="form-group">
