@@ -80,6 +80,42 @@ router.put('/:id/read', async (req, res) => {
   }
 });
 
+// PATCH - Marcar como leída (alias para PUT)
+router.patch('/:id/read', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const result = await query(`
+      UPDATE notifications
+      SET is_read = true, read_at = NOW()
+      WHERE notification_id = $1
+      RETURNING *
+    `, [id]);
+
+    res.json({ success: true, data: result.rows[0] });
+  } catch (error) {
+    console.error('Error marcando notificación:', error);
+    res.status(500).json({ success: false, message: 'Error al marcar notificación' });
+  }
+});
+
+// PATCH - Marcar todas como leídas
+router.patch('/read-all', async (req, res) => {
+  try {
+    const result = await query(`
+      UPDATE notifications
+      SET is_read = true, read_at = NOW()
+      WHERE is_read = false
+      RETURNING *
+    `);
+
+    res.json({ success: true, data: result.rows });
+  } catch (error) {
+    console.error('Error marcando notificaciones:', error);
+    res.status(500).json({ success: false, message: 'Error al marcar notificaciones' });
+  }
+});
+
 // DELETE - Eliminar notificación
 router.delete('/:id', async (req, res) => {
   try {
