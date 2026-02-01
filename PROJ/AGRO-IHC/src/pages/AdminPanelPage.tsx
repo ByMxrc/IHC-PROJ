@@ -57,6 +57,7 @@ export default function AdminPanelPage() {
 
   const handleSubmitCoordinator = async (data: any) => {
     try {
+      console.log('Submitting coordinator assignment:', data);
       const response = await fetch(`${API_BASE_URL}/fair-coordinators`, {
         method: 'POST',
         headers: {
@@ -70,13 +71,19 @@ export default function AdminPanelPage() {
         })
       });
 
-      if (!response.ok) throw new Error('Error al asignar coordinador');
+      const result = await response.json();
+      
+      if (!response.ok) {
+        const errorMsg = result.error || 'Error al asignar coordinador';
+        throw new Error(errorMsg);
+      }
 
       showToast('Coordinador asignado exitosamente', 'success');
       setActiveTool(null);
     } catch (error) {
       console.error('Error:', error);
-      showToast('Error al asignar coordinador', 'error');
+      const errorMsg = error instanceof Error ? error.message : 'Error al asignar coordinador';
+      showToast(errorMsg, 'error');
     }
   };
 

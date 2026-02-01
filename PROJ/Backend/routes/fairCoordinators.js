@@ -12,11 +12,16 @@ const { authenticateToken, requireRole } = require('../middleware/auth');
 router.post('/', authenticateToken, requireRole('admin'), async (req, res) => {
   const { fairId, coordinatorId, responsibilities } = req.body;
   
+  console.log('POST /fair-coordinators received:', { fairId, coordinatorId, responsibilities });
+  
   try {
     // Validar que fairId y coordinatorId estén presentes
-    if (!fairId || !coordinatorId) {
-      console.error('Missing required fields:', { fairId, coordinatorId });
-      return res.status(400).json({ error: 'fairId y coordinatorId son requeridos' });
+    if (!fairId || !coordinatorId || fairId === 0 || coordinatorId === 0) {
+      console.error('Invalid request - missing or zero values:', { fairId, coordinatorId });
+      return res.status(400).json({ 
+        error: 'Debe seleccionar una feria y un coordinador válidos',
+        details: { fairId, coordinatorId }
+      });
     }
 
     // Verificar que el coordinador exista y tenga el rol correcto
@@ -74,8 +79,13 @@ router.post('/', authenticateToken, requireRole('admin'), async (req, res) => {
     
     res.status(201).json(result.rows[0]);
   } catch (error) {
-    console.error('Error assigning coordinator:', error);
-    res.status(500).json({ error: 'Error al asignar coordinador', details: error.message });
+    console.error('Error assigning coordinator:', error.message);
+    console.error('Stack:', error.stack);
+    res.status(500).json({ 
+      error: 'Error al asignar coordinador', 
+      details: error.message,
+      code: error.code 
+    });
   }
 });
 
